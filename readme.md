@@ -17,12 +17,19 @@ Scans local and removable drives for files matching patterns known to be associa
    - debug - Control debug mode. Debug mode disables user notifications and directs alerts to a different email
    - debug_email - The email that will receive debug alerts.
  - Set runtime parameters in App.config
-   - patterns - additional patterns to search for
-   - whitelist - patterns to whitelist
+   - patterns 
+     - additional patterns to search for
+	 - separate multiple patterns with pipe | character.
+   - whitelist 
+     - patterns to whitelist
+	 - separate multiple patterns with pipe | character.
    - action
-     - alert - alerts the user and sends notification email
-     - disconnect - alerts the user and disconnects target computer from network
-     - shutdown - alerts the user and shuts down the target computer
+     - alert 
+	   - alerts the user and sends notification email
+     - disconnect 
+	   - alerts the user and disconnects target computer from network
+     - shutdown 
+	   - alerts the user and shuts down the target computer
  - Build Project
  - Run executable on target computer.
  
