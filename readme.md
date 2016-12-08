@@ -34,7 +34,7 @@ Scans local and removable drives for files matching patterns known to be associa
 ## Author
  J. Bloomstrom
  
- ## License
+## License
  MIT
  
  
