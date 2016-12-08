@@ -13,7 +13,7 @@ Scans local and removable drives for files matching patterns known to be associa
    - email_username
    - email_password
    - email_port
-   - slack_hook - Slack webhook url. Send a message to an infections channel in Slack
+   - slack_hook - Slack webhook url. Send a message to Slack.
    - debug - Control debug mode. Debug mode disables user notifications and directs alerts to a different email
    - debug_email - The email that will receive debug alerts.
  - Set runtime parameters in App.config
