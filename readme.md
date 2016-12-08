@@ -26,11 +26,12 @@ Scans local and removable drives for files matching patterns known to be associa
  - Build Project
  - Run executable on target computer.
  
- ## Credits
+
+## Credits
  
  Thank you to https://fsrm.experiant.ca for providing the API.
  
- ## Author
+## Author
  J. Bloomstrom
  
  ## License
