@@ -1,0 +1,11 @@
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.config
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csprojResolveAssemblyReference.cache
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.manifest
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.application
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe.manifest
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.application
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.dll
