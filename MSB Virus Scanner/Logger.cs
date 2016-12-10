@@ -19,6 +19,8 @@ namespace MSB_Virus_Scanner
                 Directory.CreateDirectory(@"C:\temp");
             }
 
+            cleanup();
+
             if (!File.Exists(logPath))
             {
                 // Create a file to write to.
@@ -77,9 +79,28 @@ namespace MSB_Virus_Scanner
             }
         }
 
+        public void tear_down()
+        {
+            var l = new FileInfo(logPath);
+            if (l.Exists) l.Delete();
+
+            var i = new FileInfo(infectedPath);
+            if (i.Exists) i.Delete();
+        }
+
         public string get()
         {
             return File.ReadAllText(logPath).Replace(Environment.NewLine,@"<br/>" + Environment.NewLine);
+        }
+
+        private void cleanup()
+        {
+            Directory.GetFiles(@"C:\temp", "MSB_Virus_Scan*.log")
+                .Select(f => new FileInfo(f))
+                .OrderByDescending(f => f.CreationTime)
+                .Skip(5)
+                .ToList()
+                .ForEach(f => f.Delete());
         }
     }
 }
