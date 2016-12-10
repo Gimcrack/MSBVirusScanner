@@ -14,7 +14,7 @@ namespace MSB_Virus_Scanner
     {
         public string action = ConfigurationManager.AppSettings["action"];
 
-        public SlackClient slack = new SlackClient( ConfigurationManager.AppSettings["slack_hook"] );
+        public Slack.Client slack = new Slack.Client( ConfigurationManager.AppSettings["slack_hook"] );
 
         public Scanner scanner;
 
@@ -56,12 +56,34 @@ namespace MSB_Virus_Scanner
         private void debug() 
         {
             string subject = "TEST -- MSB Infection Found On " + Environment.MachineName + " - " + Environment.UserName;
-            string message = "TEST -- Infected Files <br>" + String.Join(@"<br/>", Program.scanner.infected_files); 
+            string message = "TEST -- Infected Files <br>" + Environment.NewLine + "Pattern: " + Program.scanner.matched_pattern + Environment.NewLine + @"<br/>" + String.Join(@"<br/>" + Environment.NewLine, Program.scanner.infected_files); 
             message += Program.log.get();
 
             Mailer.mail(message, subject);
 
-            slack.PostMessage(text: subject);
+            sendSlack();
+        }
+
+        private void sendSlack()
+        {
+            Slack.Attachment a = new Slack.Attachment()
+            {
+                Title = "MSB Virus Scanner Results",
+            };
+
+            a.AddField("Computer", Environment.MachineName);
+            a.AddField("User", Environment.UserName);
+            a.AddField("Pattern", Program.scanner.matched_pattern);
+            a.AddField("Files", String.Join(Environment.NewLine, Program.scanner.infected_files), false);
+
+            Slack.Payload p = new Slack.Payload()
+            {
+                Text = ( Program.debug == 1 ) ? "TEST -- MSB Infection Found" : "MSB Infection Found"
+            };
+
+            p.Attach(a);
+
+            slack.PostMessage(p);
         }
 
 
@@ -70,11 +92,11 @@ namespace MSB_Virus_Scanner
         {
 
             string subject = "MSB Infection Found On " + Environment.MachineName + " - " + Environment.UserName;
-            string message = "Infected Files <br>" + String.Join(@"<br/>", Program.scanner.infected_files);
+            string message = "Infected Files <br>" + Environment.NewLine + "Pattern: " + Program.scanner.matched_pattern + Environment.NewLine + @"<br/>" + String.Join(@"<br/>" + Environment.NewLine, Program.scanner.infected_files);
 
             Mailer.mail(message, subject);
 
-            slack.PostMessage(text: subject);
+            sendSlack();
 
             AutoClosingMessageBox.Show("Your computer appears to have a virus infection. Please shut down your computer and call Service Desk immediately at x8553.  Your computer will automatically be disconnected from the network to prevent further infection.", "Virus Infection Found", 15000);
         }
