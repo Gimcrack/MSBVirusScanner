@@ -26,18 +26,39 @@ namespace MSB_Virus_Scanner
 
         public IEnumerable<string> whitelist;
 
-        public IEnumerable<string> global_whitelist = new List<string>() {
+        public IEnumerable<string> file_whitelist = new List<string>()
+        {
+            @"C:\Program Files (x86)\PostgreSQL\doc\contrib\README.pgcrypto",
+            @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\ViewModels\Tools\!ReadMe.txt",
+            @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\Views\Controls\!ReadMe.txt",
+            @"CS-USAH.cry",
+            @"C:\Program Files\Git\usr\share\vim\vim74\doc\recover.txt",
+            @"TEDefault.scl",
+            @"TEScale.scl",
+        };
+
+        public IEnumerable<string> global_whitelist = new List<string>() 
+        {
             "*.AFD",
             "*decipher*",
             "*.abc",
             "*_recover_*.*",
             "*+recover+*.*",
+            "*-recover-*.*",
             "*cpyt*",
             "*.*locked",
             "locked.bmp",
             "*.xxx",
             "message.txt",
-            "*.ttt"
+            "*.ttt",
+            "*.ccc",
+            "*.adr",
+            ".~",
+            "*.btc",
+            "*.xyz",
+            "*.cbf",
+            "!ReadMe.txt",
+            "*.zzz",
         };
 
         public Boolean infected;
@@ -45,6 +66,8 @@ namespace MSB_Virus_Scanner
         public Boolean stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
 
         public IEnumerable<string> infected_files;
+
+        public string matched_pattern;
 
         public void Scan()
         {
@@ -131,13 +154,17 @@ namespace MSB_Virus_Scanner
                 // low hanging fruit, find simple patterns that do not contain wildcards
                 var files = Directory
                     .EnumerateFiles(path)
-                    .Where(file => easy_patterns.Any(file.Contains));
+                    .Where(file => easy_patterns.Any(file.Contains))
+                    .Where(file => ! file_whitelist.Contains(file))
+                    .Where(file => ! file_whitelist.Any(file.Contains));
 
                 if (files.Count() > 0)
                 {
                     infected = true;
                     this.infected_files = files;
-                    Program.log.write_infection(files);
+                    this.matched_pattern = easy_patterns.First(files.First().Contains);
+
+                    Program.log.write_infection(files, this.matched_pattern);
                     if (stop_on_find) return;
                 }
 
@@ -146,14 +173,21 @@ namespace MSB_Virus_Scanner
                 {
                     if (infected && stop_on_find) break;
 
+                    Boolean special = this.IsSpecialPattern(pattern);
+
                     files = Directory
-                        .EnumerateFiles(path, pattern);
+                        .EnumerateFiles(path, pattern)
+                        .Where(file => ! file_whitelist.Contains(file))
+                        .Where(file => ! file_whitelist.Any(file.Contains))
+                        .Where(file => ! special || file.EndsWith(pattern.Replace("*",String.Empty)));
 
                     if (files.Count() > 0)
                     {
                         infected = true;
                         this.infected_files = files;
-                        Program.log.write_infection(files);
+                        this.matched_pattern = pattern;
+
+                        Program.log.write_infection(files, this.matched_pattern);
                         if (stop_on_find) break;
                     }
                 }
@@ -174,6 +208,18 @@ namespace MSB_Virus_Scanner
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+
+        /**
+         *    Handle special cases where the pattern 
+         *     is of the form *.XXX to avoid matching
+         *     files like *.XXXABC
+         *    
+         */
+        private Boolean IsSpecialPattern(string pattern)
+        {
+            return (pattern.LastIndexOf("*.") == (pattern.Length - 5)) ? true : false;
         }
     }
 

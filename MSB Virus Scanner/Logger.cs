@@ -24,6 +24,7 @@ namespace MSB_Virus_Scanner
                 // Create a file to write to.
                 using (StreamWriter sw = File.CreateText(logPath))
                 {
+                    sw.WriteLine(Environment.NewLine);
                     sw.WriteLine("MSB Virus Scanner");
                     sw.WriteLine(DateTime.Now);
                     sw.WriteLine(Environment.NewLine);
@@ -68,9 +69,17 @@ namespace MSB_Virus_Scanner
             }
         }
 
+        public void write_infection(IEnumerable<string> list, string matched_pattern) 
+        {
+            foreach (string file in list)
+            {
+                write_infection("Infected file found: " + file + " Pattern: " + matched_pattern);
+            }
+        }
+
         public string get()
         {
-            return File.ReadAllText(logPath);
+            return File.ReadAllText(logPath).Replace(Environment.NewLine,@"<br/>" + Environment.NewLine);
         }
     }
 }

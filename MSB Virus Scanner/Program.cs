@@ -7,9 +7,11 @@ using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
 using System.Net;
+using System.Net.Sockets;
 using System.IO;
 using System.Net.Mail;
 using System.Configuration;
+
 
 
 
@@ -36,5 +38,20 @@ namespace MSB_Virus_Scanner
             }
 
         }
+
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
+        }
     }
+
+
 }
