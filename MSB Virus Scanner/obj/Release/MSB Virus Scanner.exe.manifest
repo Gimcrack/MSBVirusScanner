@@ -52,14 +52,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MSB Virus Scanner.exe" size="24064">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MSB Virus Scanner.exe" size="25088">
       <assemblyIdentity name="MSB Virus Scanner" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/p+2lopZ8EAcp+4KlHc+AKFY2XE8RfC0T+21TNQpp8s=</dsig:DigestValue>
+        <dsig:DigestValue>2PZMCyWv4Y1nVnhwXnk7c2QX09XW9+al/RoGD+G6P+A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

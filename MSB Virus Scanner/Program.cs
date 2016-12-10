@@ -37,6 +37,11 @@ namespace MSB_Virus_Scanner
                 responder.respond(scanner);
             }
 
+            else
+            {
+                Program.log.tear_down();
+            }
+
         }
 
         public static string GetLocalIPAddress()
