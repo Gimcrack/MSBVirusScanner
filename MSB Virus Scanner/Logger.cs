@@ -34,17 +34,6 @@ namespace MSB_Virus_Scanner
                 }
             }
 
-            if (!File.Exists(infectedPath))
-            {
-                // Create a file to write to.
-                using (StreamWriter sw2 = File.CreateText(infectedPath))
-                {
-                    sw2.WriteLine("MSB Virus Scanner Infections");
-                    sw2.WriteLine(DateTime.Now);
-                    sw2.WriteLine(Environment.NewLine);
-                    sw2.WriteLine(Environment.NewLine);
-                }
-            }
         }
 
         public void write(string text)
@@ -57,6 +46,18 @@ namespace MSB_Virus_Scanner
 
         public void write_infection( string text )
         {
+            if (!File.Exists(infectedPath))
+            {
+                // Create a file to write to.
+                using (StreamWriter sw2 = File.CreateText(infectedPath))
+                {
+                    sw2.WriteLine("MSB Virus Scanner Infections");
+                    sw2.WriteLine(DateTime.Now);
+                    sw2.WriteLine(Environment.NewLine);
+                    sw2.WriteLine(Environment.NewLine);
+                }
+            }
+
             using (StreamWriter sw = File.AppendText(infectedPath))
             {
                 sw.WriteLine(DateTime.Now + "  --  " + text);
@@ -98,7 +99,7 @@ namespace MSB_Virus_Scanner
             Directory.GetFiles(@"C:\temp", "MSB_Virus_Scan*.log")
                 .Select(f => new FileInfo(f))
                 .OrderByDescending(f => f.CreationTime)
-                .Skip(5)
+                .Skip(6)
                 .ToList()
                 .ForEach(f => f.Delete());
         }
