@@ -13,75 +13,71 @@ namespace MSB_Virus_Scanner
 {
     public class Scanner
     {
-
-        public List<DriveInfo> localDrives;
-
-        public IEnumerable<string> easy_patterns; // low-hanging fruit
-
-        public IEnumerable<string> wildcard_patterns;
-
-        public IEnumerable<string> patterns;
-
-        public IEnumerable<string> userdefined_patterns;
-
-        public IEnumerable<string> whitelist;
-
-        public IEnumerable<string> infected_files;
-
-        /**
-         *  Whitelisted files
-         */
-        public IEnumerable<string> file_whitelist = new List<string>()
-        {
-            @"C:\Program Files (x86)\PostgreSQL\doc\contrib\README.pgcrypto",
-            @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\ViewModels\Tools\!ReadMe.txt",
-            @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\Views\Controls\!ReadMe.txt",
-            @"CS-USAH.cry",
-            @"C:\Program Files\Git\usr\share\vim\vim74\doc\recover.txt",
-            @"TEDefault.scl",
-            @"TEScale.scl",
-            @"!ReadMe.txt",
-        };
-
-        /**
-         *  Whitelisted patterns
-         */
-        public IEnumerable<string> global_whitelist = new List<string>() 
-        {
-            "*.AFD",
-            "*decipher*",
-            "*.abc",
-            "*_recover_*.*",
-            "*+recover+*.*",
-            "*-recover-*.*",
-            "*cpyt*",
-            "*.*locked",
-            "locked.bmp",
-            "*.xxx",
-            "message.txt",
-            "*.ttt",
-            "*.ccc",
-            "*.adr",
-            ".~",
-            "*.btc",
-            "*.xyz",
-            "*.cbf",
-            "*.zzz",
-        };
-
         public Boolean infected;
 
-        public Boolean stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
+        public Boolean sentry;
+
+        private Boolean stop_on_find;
 
         public string matched_pattern;
 
-        public void Scan()
+        public IEnumerable<string> infected_files;
+
+        private IEnumerable<string> non_wildcard_patterns;
+
+        private IEnumerable<string> wildcard_patterns;
+
+        private IEnumerable<string> file_whitelist;
+
+        private IEnumerable<string> global_whitelist;
+
+        public Scanner()
         {
-            localDrives = getLocalDrives();
+            stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
+
+            file_whitelist = new List<string>()
+            {
+                @"C:\Program Files (x86)\PostgreSQL\doc\contrib\README.pgcrypto",
+                @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\ViewModels\Tools\!ReadMe.txt",
+                @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\Views\Controls\!ReadMe.txt",
+                @"CS-USAH.cry",
+                @"C:\Program Files\Git\usr\share\vim\vim74\doc\recover.txt",
+                @"TEDefault.scl",
+                @"TEScale.scl",
+                @"!ReadMe.txt",
+                @"vim\vim74\doc\recover.txt",
+            };
+
+            global_whitelist = new List<string>() 
+            {
+                "*.AFD",
+                "*decipher*",
+                "*.abc",
+                "*_recover_*.*",
+                "*+recover+*.*",
+                "*-recover-*.*",
+                "*cpyt*",
+                "*.*locked",
+                "locked.bmp",
+                "*.xxx",
+                "message.txt",
+                "*.ttt",
+                "*.ccc",
+                "*.adr",
+                ".~",
+                "*.btc",
+                "*.xyz",
+                "*.cbf",
+                "*.zzz",
+            };
 
             getPatterns();
+        }
 
-            foreach (DriveInfo drive in localDrives)
+        public void Scan()
+        {
+
+            foreach (DriveInfo drive in Program.GetLocalDrives() )
             {
                 if (infected && stop_on_find) break;
                 scanFolder(drive.RootDirectory.ToString());
@@ -92,6 +88,7 @@ namespace MSB_Virus_Scanner
                 Program.log.write("Infection Found" + Environment.NewLine + "Infected Files" + Environment.NewLine + String.Join(Environment.NewLine, infected_files));
 
                 Console.WriteLine("Infected files");
+                
                 foreach (string file in infected_files)
                 {
                     Console.WriteLine(file);
@@ -99,32 +96,15 @@ namespace MSB_Virus_Scanner
             }
         }
 
-        private List<DriveInfo> getLocalDrives()
-        {
-            List<DriveInfo> drives = new List<DriveInfo>();
-
-            foreach (DriveInfo d in DriveInfo.GetDrives())
-            {
-                switch (d.DriveType)
-                {
-                    case DriveType.Fixed:
-                    case DriveType.Removable:
-                        drives.Add(d);
-                        break;
-                }
-            }
-            return drives;
-        }
-
         private void getPatterns()
         {
             string url = "https://fsrm.experiant.ca/api/v1/combined";
 
-            this.userdefined_patterns = (ConfigurationManager.AppSettings["patterns"].Length > 0) ?
+            var userdefined_patterns = (ConfigurationManager.AppSettings["patterns"].Length > 0) ?
                     ConfigurationManager.AppSettings["patterns"].Split('|').ToList() :
                     new List<string>() { "aeraimangangaingaiegannnanrg" };
 
-            this.whitelist = (ConfigurationManager.AppSettings["whitelist"].Length > 0) ?
+            var whitelist = (ConfigurationManager.AppSettings["whitelist"].Length > 0) ?
                 ConfigurationManager.AppSettings["whitelist"].Split('|').ToList() :
                 new List<string>() { "aeraimangangaingaiegannnanrg" };
 
@@ -132,18 +112,16 @@ namespace MSB_Virus_Scanner
             {
                 var json = webClient.DownloadString(url);
                 var filters = JsonConvert.DeserializeObject<Filters>(json).filters;
-                var patterns =  this.userdefined_patterns;
-                var exceptions = this.whitelist;
 
-                var all_patterns = filters.Union(patterns).Except(exceptions).Except(global_whitelist);
+                var all_patterns = filters.Union(userdefined_patterns).Except(whitelist).Except(global_whitelist);
 
-                easy_patterns = all_patterns.Where(s => !s.Contains("*"));
+                non_wildcard_patterns = all_patterns.Where(s => !s.Contains("*"));
 
-                wildcard_patterns = all_patterns.Except(easy_patterns);
+                wildcard_patterns = all_patterns.Except(non_wildcard_patterns);
             }
         }
 
-        public void scanFolder(string path)
+        public void scanFolder(string path, bool recurse = true)
         {
             try
             {
@@ -152,11 +130,12 @@ namespace MSB_Virus_Scanner
 
                 Console.WriteLine("Scanning " + path);
                 Program.log.write("Scanning " + path);
+                
 
                 // low hanging fruit, find simple patterns that do not contain wildcards
                 var files = Directory
                     .EnumerateFiles(path)
-                    .Where(file => easy_patterns.Any(file.Contains))
+                    .Where(file => non_wildcard_patterns.Any(file.Contains))
                     .Where(file => ! file_whitelist.Contains(file))
                     .Where(file => ! file_whitelist.Any(file.Contains));
 
@@ -164,7 +143,7 @@ namespace MSB_Virus_Scanner
                 {
                     infected = true;
                     this.infected_files = files;
-                    this.matched_pattern = easy_patterns.First(files.First().Contains);
+                    this.matched_pattern = non_wildcard_patterns.First(files.First().Contains);
 
                     Program.log.write_infection(files, this.matched_pattern);
                     if (stop_on_find) return;
@@ -198,11 +177,14 @@ namespace MSB_Virus_Scanner
                 if (infected && stop_on_find) return;
 
 
-                foreach (string dir in Directory.EnumerateDirectories(path))
+                if ( recurse )
                 {
-                    if (infected && stop_on_find) break;
+                    foreach (string dir in Directory.EnumerateDirectories(path))
+                    {
+                        if (infected && stop_on_find) break;
 
-                    scanFolder(dir);
+                        scanFolder(dir);
+                    }
                 }
 
             }
@@ -210,6 +192,13 @@ namespace MSB_Virus_Scanner
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public void Reset()
+        {
+            infected = false;
+            matched_pattern = null;
+            infected_files = null;
         }
 
 

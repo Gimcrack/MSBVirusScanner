@@ -1,0 +1,8 @@
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Service\MSB Virus Scanner.exe.config
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB Virus Scanner.exe.config
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB Virus Scanner.exe
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Service\MSB_Virus_Scanner.Service.MSB_Virus_Sentry.resources
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Service\MSB Virus Scanner.csproj.GenerateResource.Cache
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Service\MSB Virus Scanner.exe
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Service\MSB Virus Scanner.pdb
