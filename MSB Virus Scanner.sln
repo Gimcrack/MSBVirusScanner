@@ -10,6 +10,7 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 		Server|Any CPU = Server|Any CPU
+		Service|Any CPU = Service|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -18,6 +19,8 @@ Global
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Server|Any CPU.ActiveCfg = Server|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Server|Any CPU.Build.0 = Server|Any CPU
+		{B360EAB1-A170-45D8-8140-8DE475688E56}.Service|Any CPU.ActiveCfg = Service|Any CPU
+		{B360EAB1-A170-45D8-8140-8DE475688E56}.Service|Any CPU.Build.0 = Service|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

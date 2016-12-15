@@ -38,8 +38,8 @@ namespace MSB_Virus_Scanner.Slack
         {
             string payloadJson = JsonConvert.SerializeObject(payload);
 
-            Program.log.write("Payload JSON");
-            Program.log.write(payloadJson);
+            //Program.log.write("Payload JSON");
+            //Program.log.write(payloadJson);
 
             using (WebClient client = new WebClient())
             {
@@ -128,11 +128,13 @@ namespace MSB_Virus_Scanner.Slack
         {
             AuthorName = "ScanBot";
             AuthorIcon = "http://icons.iconarchive.com/icons/icons8/windows-8/512/Healthcare-Virus-icon.png";
-            Color = "#a64f36";
+            Color = "danger";
             Pretext = Environment.MachineName + " " + Program.GetLocalIPAddress();
+            ThumbUrl = "https://cdn3.iconfinder.com/data/icons/ose/Warning.png";
             Fields = new List<Field>();
             TimeStamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            Footer = "MSB Virus Scanner"; 
+            Footer = "MSB Virus Scanner";
+            FooterIcon = "http://cdn.publicsurplus.com/sms/docviewer/logo/173477/2681997";
         }
 
         public void AddField( string key, string val )
@@ -145,13 +147,13 @@ namespace MSB_Virus_Scanner.Slack
             });
         }
 
-        public void AddField( string key, string val, bool shrt)
+        public void AddField( string key, string val, bool IsShort)
         {
             this.Fields.Add(new Field()
             {
                 Title = key,
                 Value = val,
-                Short = shrt
+                Short = IsShort
             });
         }
     }

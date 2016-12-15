@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using System.Diagnostics;
-using System.Security.Principal;
 using System.Management;
 
 namespace MSB_Virus_Scanner
@@ -51,13 +50,24 @@ namespace MSB_Virus_Scanner
                     disconnect();
                     break;
             }
+
+            this.scanner.Reset();
         }
 
         private void debug() 
         {
-            string subject = "TEST -- MSB Infection Found On " + Environment.MachineName + " - " + Environment.UserName;
-            string message = "TEST -- Infected Files <br>" + Environment.NewLine + "Pattern: " + Program.scanner.matched_pattern + Environment.NewLine + @"<br/>" + String.Join(@"<br/>" + Environment.NewLine, Program.scanner.infected_files); 
-            message += Program.log.get();
+            string subject = string.Format("TEST -- MSB Infection Found On {0} - {1}",
+                Environment.MachineName,
+                Environment.UserName
+            );
+            
+            string message = string.Format("TEST -- Infected Files <br> {0} Pattern: {1} {2}<br/>{3} <br/> {4}",
+                Environment.NewLine,
+                scanner.matched_pattern,
+                Environment.NewLine,
+                String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files),
+                Program.log.get()
+            );
 
             Mailer.mail(message, subject);
 
@@ -73,8 +83,9 @@ namespace MSB_Virus_Scanner
 
             a.AddField("Computer", Environment.MachineName);
             a.AddField("User", Environment.UserName);
-            a.AddField("Pattern", Program.scanner.matched_pattern);
-            a.AddField("Files", String.Join(Environment.NewLine, Program.scanner.infected_files), false);
+            a.AddField("IP", Program.GetLocalIPAddress());
+            a.AddField("Pattern", scanner.matched_pattern);
+            a.AddField("Files", String.Join(Environment.NewLine, scanner.infected_files), false);
 
             Slack.Payload p = new Slack.Payload()
             {
@@ -90,20 +101,40 @@ namespace MSB_Virus_Scanner
 
         private void warn()
         {
+            int display_message_length_ms = 15000; // length of time to display the message to the user.
 
-            string subject = "MSB Infection Found On " + Environment.MachineName + " - " + Environment.UserName;
-            string message = "Infected Files <br>" + Environment.NewLine + "Pattern: " + Program.scanner.matched_pattern + Environment.NewLine + @"<br/>" + String.Join(@"<br/>" + Environment.NewLine, Program.scanner.infected_files);
+            string subject = string.Format("MSB Infection Found On {0} - {1}",
+                Environment.MachineName,
+                Environment.UserName
+            );
+
+            string message = string.Format("Infected Files <br> {0} Pattern: {1} {2}<br/>{3}",
+                Environment.NewLine,
+                scanner.matched_pattern,
+                Environment.NewLine,
+                String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files)
+            );
 
             Mailer.mail(message, subject);
 
+            Console.WriteLine(message);
+
             sendSlack();
 
-            AutoClosingMessageBox.Show("Your computer appears to have a virus infection. Please shut down your computer and call Service Desk immediately at x8553.  Your computer will automatically be disconnected from the network to prevent further infection.", "Virus Infection Found", 15000);
+            AutoClosingMessageBox.Show( string.Format("{0} {1} {2} {3}",
+                    "Your computer appears to have a virus infection",
+                    Environment.NewLine + Environment.NewLine,
+                    "Please shut down your computer and call Service Desk immediately at x8553.",
+                    "Your computer will be disconnected from the network to prevent further infection."
+                ), 
+                "Virus Infection Found", 
+                display_message_length_ms
+            );
         }
 
         private void disconnect()
         {
-            if ( ! IsAdministrator() )
+            if ( ! Program.IsAdministrator() )
             {
                 shutdown();
                 return;
@@ -133,13 +164,5 @@ namespace MSB_Virus_Scanner
         {
             Process.Start("shutdown", "-s -t 300");
         }
-
-        private static bool IsAdministrator()
-        {
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
     }
 }

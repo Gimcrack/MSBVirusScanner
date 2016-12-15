@@ -1,10 +1,6 @@
 \\dsjkb\desoft$\MSBVirusScanner\MSB Virus Scanner.exe.config
-\\dsjkb\desoft$\MSBVirusScanner\MSB Virus Scanner.exe.manifest
-\\dsjkb\desoft$\MSBVirusScanner\MSB Virus Scanner.application
 \\dsjkb\desoft$\MSBVirusScanner\MSB Virus Scanner.exe
 \\dsjkb\desoft$\MSBVirusScanner\MSB Virus Scanner.pdb
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.exe.manifest
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.application
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.exe
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.pdb
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csprojResolveAssemblyReference.cache

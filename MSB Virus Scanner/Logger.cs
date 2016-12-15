@@ -7,7 +7,7 @@ using System.IO;
 
 namespace MSB_Virus_Scanner
 {
-    public class Logger
+    public class Logger : ILogger
     {
         public static string logPath = string.Format(@"C:\temp\MSB_Virus_Scan_{0:yyyy-MM-dd_hh-mm-ss}.log", DateTime.Now);
         public static string infectedPath = string.Format(@"C:\temp\MSB_Virus_Scan_{0:yyyy-MM-dd_hh-mm-ss}_infections.log", DateTime.Now);
