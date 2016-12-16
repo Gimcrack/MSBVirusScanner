@@ -1,46 +1,47 @@
-# MSB Crypto Virus Scanner
+# MSB Virus Scanner
 
-Scans local and removable drives for files matching patterns known to be associated with crypto viruses.  Automatically includes patterns from https://fsrm.experiant.ca/api/v1/combined.
+A simple Windows utility for detecting Crypto/Ransomware Viruses
 
-## Usage
+![Main Menu](https://github.com/akmatsu/MSBVirusScanner/raw/master/images/screenshot.png "Main Menu")
 
- - Clone repo
- - Copy App.config.example App.config
- - Setup initial parameters in App.config
-   - email_to
-   - email_from
-   - email_server
-   - email_username
-   - email_password
-   - email_port
-   - slack_hook - Slack webhook url. Send a message to Slack.
-   - debug - Control debug mode. Debug mode disables user notifications and directs alerts to a different email
-   - debug_email - The email that will receive debug alerts.
- - Set runtime parameters in App.config
-   - patterns 
-     - additional patterns to search for
-	 - separate multiple patterns with pipe | character.
-   - whitelist 
-     - patterns to whitelist
-	 - separate multiple patterns with pipe | character.
-   - action
-     - alert 
-	   - alerts the user and sends notification email
-     - disconnect 
-	   - alerts the user and disconnects target computer from network
-     - shutdown 
-	   - alerts the user and shuts down the target computer
- - Build Project
- - Run executable on target computer.
- 
+## Operation
+* Scanner Mode - Scans local and removable drives for files matching patterns known to be associated with crypto viruses.  
+* * Automatically includes patterns from https://fsrm.experiant.ca/api/v1/combined.
+* * Optionally specify your own list of patterns to scan for
+* * Whitelist patterns to avoid false positives
+* Sentry Mode - Monitors local drives for infected files
+* * File Creation Events - Files are automatically scanned 
+* * File Rename Events - Files are automatically scanned
+* Service Mode - Fully Automated Protection
+* * Runs Sentry Mode continuously
+* * Runs a full scan daily 
+* All Modes - Take action when an infected files is found
+* * Alerts user of the infection
+* * Optionally disables network connections
+* * Optionally shuts down infected computer
+* All Modes - Alert Service Desk or others
+* * Send email notification (optional)
+* * Send Slack notification (optional)
+* All Modes - Logs Activity
+* * Log to text file (Scanner Mode)
+* * Log to Windows Event Log
+* * Log to SQL Database (optional)
+
+## Configuration
+
+Configure the application by choosing option 5 at the Main Menu. You can also edit the .config file directly.
+
+![Configuration](https://github.com/akmatsu/MSBVirusScanner/raw/master/images/screenshot.png "Configuration") 
+
+## Contributing
+ I'm always open to suggestiosn. Send me a PR or open an issue with GitHub.
 
 ## Credits
- 
  Thank you to https://fsrm.experiant.ca for providing the API.
  
 ## Author
  J. Bloomstrom
- 
+
 ## License
  MIT
  

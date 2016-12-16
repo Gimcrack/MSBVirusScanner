@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Diagnostics;
 using System.Management;
+using System.Timers;
 
 namespace MSB_Virus_Scanner
 {
@@ -14,6 +15,10 @@ namespace MSB_Virus_Scanner
         public string action = ConfigurationManager.AppSettings["action"];
 
         public Slack.Client slack = new Slack.Client( ConfigurationManager.AppSettings["slack_hook"] );
+
+        private Boolean slack_frozen;
+
+        private Boolean mail_frozen;
 
         public Scanner scanner;
 
@@ -66,16 +71,20 @@ namespace MSB_Virus_Scanner
                 scanner.matched_pattern,
                 Environment.NewLine,
                 String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files),
-                Program.log.get()
+                Program.log.Get()
             );
 
-            Mailer.mail(message, subject);
+            sendMail(message, subject);
 
             sendSlack();
         }
 
         private void sendSlack()
         {
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["slack_enabled"])) return; // slack not enabled
+
+            if (slack_frozen) return; // wait until slack is allowed again;
+
             Slack.Attachment a = new Slack.Attachment()
             {
                 Title = "MSB Virus Scanner Results",
@@ -95,6 +104,40 @@ namespace MSB_Virus_Scanner
             p.Attach(a);
 
             slack.PostMessage(p);
+
+            freezeSlack();
+        }
+
+        private void freezeSlack()
+        {
+            slack_frozen = true;
+
+            Timer SlackTimer = new Timer()
+            {
+                Interval = 15 * 60 * 1000, // freeze for 15 min
+                Enabled = true,
+            };
+
+            SlackTimer.Elapsed += (object sender, ElapsedEventArgs a) =>
+            {
+                slack_frozen = false;
+            };
+        }
+
+        private void freezeMail()
+        {
+            mail_frozen = true;
+
+            Timer MailTimer = new Timer()
+            {
+                Interval = 15 * 60 * 1000, // freeze for 15 min
+                Enabled = true,
+            };
+
+            MailTimer.Elapsed += (object sender, ElapsedEventArgs a) =>
+            {
+                mail_frozen = false;
+            };
         }
 
 
@@ -115,11 +158,11 @@ namespace MSB_Virus_Scanner
                 String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files)
             );
 
-            Mailer.mail(message, subject);
-
-            Console.WriteLine(message);
+            sendMail(message, subject);
 
             sendSlack();
+
+            Console.WriteLine(message);
 
             AutoClosingMessageBox.Show( string.Format("{0} {1} {2} {3}",
                     "Your computer appears to have a virus infection",
@@ -132,6 +175,17 @@ namespace MSB_Virus_Scanner
             );
         }
 
+        private void sendMail(string message, string subject)
+        {
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["mail_enabled"])) return; // mail not enabled
+
+            if (mail_frozen) return; // wait until mail is allowed again;
+            
+            Mailer.mail(message, subject);
+
+            freezeMail();
+        }
+
         private void disconnect()
         {
             if ( ! Program.IsAdministrator() )
@@ -142,6 +196,7 @@ namespace MSB_Virus_Scanner
 
             try
             {
+                Program.log.Write(String.Format("Killing Network Connections On {0}", Environment.MachineName));
                 // kill connections
                 SelectQuery wmiQuery = new SelectQuery("SELECT * FROM Win32_NetworkAdapter WHERE NetConnectionId != NULL");
                 ManagementObjectSearcher searchProcedure = new ManagementObjectSearcher(wmiQuery);
@@ -154,14 +209,13 @@ namespace MSB_Virus_Scanner
             // shutdown the computer if the user cannot disable network connections
             catch (Exception e)
             {
-                Program.log.write(e.Message);
+                Program.log.Write(String.Format("Error Disconnecting Computer From Network: \n\r {0}",e.Message));
             }
-
-
         }
 
         private void shutdown()
         {
+            Program.log.Write(String.Format("Shuting Down {0}", Environment.MachineName));
             Process.Start("shutdown", "-s -t 300");
         }
     }

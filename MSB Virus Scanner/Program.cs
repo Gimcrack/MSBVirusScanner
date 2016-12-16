@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,7 +20,11 @@ namespace MSB_Virus_Scanner
 {
     class Program
     {
+        public static NameValueCollection config = ConfigurationManager.AppSettings;
+        
         public static string mode;  // Scanner | Sentry
+
+        public static Boolean unattended;
 
         public static Scanner scanner;
 
@@ -27,32 +32,27 @@ namespace MSB_Virus_Scanner
 
         public static Responder responder;
 
-        public static ILogger log;
+        public static LogHandler log;
 
         public static Service.MSB_Virus_Sentry MVS;
 
-        public static int debug = Int32.Parse(ConfigurationManager.AppSettings["debug"]);
-       
+        public static int debug = Int32.Parse(config["debug"]);
+
+        public static bool database_logging = Convert.ToBoolean(config["database_enabled"]);
+
+        [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+
+            // set up the log handler
+            log = new LogHandler();
+
             // get the mode of operation
             mode = GetMode(args);
 
             // init responder
             responder = new Responder();
-
-            /*
-            // make sure this one supersedes any other running ones.
-            Process current = Process.GetCurrentProcess();
-            
-            foreach(Process p in Process.GetProcessesByName(current.ProcessName))
-            {
-                if (p.Id != current.Id)
-                {
-                    p.Kill();
-                }
-            }
-             */
 
             Route();
             
@@ -108,24 +108,33 @@ namespace MSB_Virus_Scanner
                 userChoice = Menu.Display(invalid);
             }
             while (userChoice < 1);
- 
-            switch(userChoice)
+
+            HandleMenuChoice(userChoice);
+        }
+
+        private static void HandleMenuChoice( int userChoice )
+        {
+            switch (userChoice)
             {
                 case 1: mode = "Scanner"; break;
                 case 2: mode = "Sentry"; break;
                 case 3: mode = "Install"; break;
                 case 4: mode = "Uninstall"; break;
+                case 5:
+                    Configure();
+                    ShowMenu();
+                    return;
 
-                case 5: 
+                case 6:
                     Usage();
                     ShowMenu();
                     return;
-                
-                case 6: 
-                    Environment.Exit(0); 
+
+                case 7:
+                    Environment.Exit(0);
                     return;
-                
-                default: 
+
+                default:
                     ShowMenu();
                     return;
             }
@@ -136,9 +145,7 @@ namespace MSB_Virus_Scanner
         private static void Install()
         {
 
-            bool serviceExists = ServiceController.GetServices().Any(s => s.ServiceName == "MSB_Virus_Sentry");
-
-            if ( serviceExists )
+            if ( IsServiceInstalled() )
             {
                 Console.WriteLine("Service Already Installed");
                 Console.WriteLine("Press <enter> to continue...");
@@ -149,20 +156,18 @@ namespace MSB_Virus_Scanner
 
             SelfInstaller.InstallMe();
 
-            Console.WriteLine("Starting Windows Service");
-            ServiceController sc = new ServiceController("MSB_Virus_Sentry");
 
-            if (sc.Status != ServiceControllerStatus.Running)
+            // don't display the form to 
+            if ( unattended || Environment.UserInteractive )
             {
-                sc.Start();
-
-                while (sc.Status != ServiceControllerStatus.Running)
-                {
-                    Thread.Sleep(1000);
-                    sc.Refresh();
-                }
+                Configure();
             }
             
+
+            Console.WriteLine("Starting Windows Service");
+            
+            StartService();
+
             Console.WriteLine("Service Started");
 
             Console.WriteLine("Press <enter> to continue...");
@@ -171,11 +176,16 @@ namespace MSB_Virus_Scanner
             ShowMenu();
         }
 
+        private static void Configure()
+        {
+            StopService();
+            Config.ShowForm();
+            StartService();
+        }
+
         private static void Uninstall()
         {
-            var serviceExists = ServiceController.GetServices().Any(s => s.ServiceName == "MSB_Virus_Sentry");
-
-            if ( ! serviceExists )
+            if ( ! IsServiceInstalled() )
             {
                 Console.WriteLine("Service Already Uninstalled");
                 Console.WriteLine("Press <enter> to continue...");
@@ -184,18 +194,7 @@ namespace MSB_Virus_Scanner
                 return;
             }
 
-            ServiceController sc = new ServiceController("MSB_Virus_Sentry");
-
-            if (sc.Status != ServiceControllerStatus.Stopped)
-            {
-                sc.Stop();
-
-                while (sc.Status != ServiceControllerStatus.Stopped)
-                {
-                    Thread.Sleep(1000);
-                    sc.Refresh();
-                }
-            }
+            StopService(); 
             
 
             SelfInstaller.UninstallMe();
@@ -210,10 +209,56 @@ namespace MSB_Virus_Scanner
             Menu.Usage();
         }
 
+        public static Boolean IsServiceRunning()
+        {
+            if (!IsServiceInstalled()) return false;
+            
+            ServiceController sc = new ServiceController("MSB_Virus_Sentry");
+            return (sc != null && sc.Status == ServiceControllerStatus.Running);
+        }
+
+        public static Boolean IsServiceInstalled()
+        {
+            return ServiceController.GetServices().Any(s => s.ServiceName == "MSB_Virus_Sentry");
+        }
+
+        private static void StopService()
+        {
+            if (!IsServiceInstalled()) return;
+
+            ServiceController sc = new ServiceController("MSB_Virus_Sentry");
+            if (sc.Status != ServiceControllerStatus.Stopped)
+            {
+                Program.log.Write("Stopping Service");
+                sc.Stop();
+
+                while (sc.Status != ServiceControllerStatus.Stopped)
+                {
+                    Thread.Sleep(1000);
+                    sc.Refresh();
+                }
+            }
+        }
+
+        private static void StartService()
+        {
+            if (!IsServiceInstalled()) return;
+
+            ServiceController sc = new ServiceController("MSB_Virus_Sentry");
+            if ( ! IsServiceRunning() )
+            {
+                sc.Start();
+
+                while (sc.Status != ServiceControllerStatus.Running)
+                {
+                    Thread.Sleep(1000);
+                    sc.Refresh();
+                }
+            }
+        }
+
         private static void Service()
         {
-            log = new EventLogger();
-
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
@@ -224,16 +269,14 @@ namespace MSB_Virus_Scanner
 
         private static void Sentry()
         {
-            log = new EventLogger();
-
             sentry = new Sentry();
         }
 
 
         private static void Scanner()
         {
-            log = new Logger();
-
+            log.Add(new Logger());
+            
             scanner = new Scanner();
             scanner.Scan();
 
@@ -244,8 +287,13 @@ namespace MSB_Virus_Scanner
 
             else
             {
-                log.tear_down();
+                log.CleanUp();
             }
+        }
+
+        public static void Scan()
+        {
+            Scanner();
         }
 
 
@@ -262,12 +310,17 @@ namespace MSB_Virus_Scanner
 
                     case "scanner": return "Scanner";
 
-                    case "install": return "Install";
+                    case "install":
+                        unattended = true;
+                        return "Install";
 
-                    case "uninstall": return "Uninstall";
+                    case "uninstall":
+                        unattended = true;
+                        return "Uninstall";
                 }
             }
 
+            unattended = false;
             return "Menu";
         }
 
