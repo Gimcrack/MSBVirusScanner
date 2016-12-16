@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,15 @@ namespace MSB_Virus_Scanner
 {
     class Database
     {
-        private static string connectionString = ConfigurationManager.AppSettings["connection_string"].ToString();
+        private static NameValueCollection config = ConfigurationManager.AppSettings;
+
+        private static string connectionString = String.Format(
+            "Server={0};Database={1};User Id={2}; password={3}",
+            config["database_server"].ToString(),
+            config["database_name"].ToString(),
+            config["database_username"].ToString(),
+            config["database_password"].ToString()
+        );
 
         public static void Statement( string command, Dictionary<string, string> parameters = null )
         {
@@ -46,7 +55,7 @@ namespace MSB_Virus_Scanner
 
                 catch (SqlException e)
                 {
-                    Program.log.write(e.Message);
+                    Program.log.Write(e.Message);
                 }
 
                 finally
@@ -90,7 +99,7 @@ namespace MSB_Virus_Scanner
 
                     catch (SqlException e)
                     {
-                        Program.log.write(e.Message);
+                        Program.log.Write(e.Message);
                         reader.Close();
                         return dt; // empty data table
                     }
@@ -103,7 +112,7 @@ namespace MSB_Virus_Scanner
 
                 catch (SqlException e)
                 {
-                    Program.log.write(e.Message);
+                    Program.log.Write(e.Message);
                     return dt; // empty data table
                 }
 

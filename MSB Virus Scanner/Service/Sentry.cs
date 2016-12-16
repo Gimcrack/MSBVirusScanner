@@ -8,6 +8,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Timers;
 
 namespace MSB_Virus_Scanner.Service
 {
@@ -33,13 +34,54 @@ namespace MSB_Virus_Scanner.Service
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            sentry = new MSB_Virus_Scanner.Sentry();
+            Program.log.Write("Sentry Service Started.");
+
+            
+            // Setup Timers
+            Timer GuardTimer = new Timer()
+            {
+                Interval = 24 * 60 * 60 * 1000, // renew once per day
+                Enabled = true,
+            };
+
+
+            Timer ScanTimer = new Timer()
+            {
+                Interval = 2 * 24 * 60 * 60 * 1000, // scan once per 2 days
+                Enabled = true,
+            };
+
+
+            // Timer Handlers
+            GuardTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
+            {
+                Guard();
+            };
+
+            ScanTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
+            {
+                Program.Scan();
+            };
+
+
+            Guard();
+            
         }
 
         protected override void OnStop()
         {
             sentry.CleanUp();
         }
+
+        private void Guard()
+        {
+            if (sentry != null)
+            {
+                sentry.CleanUp();
+            }
+            sentry = new MSB_Virus_Scanner.Sentry();
+        }
+
 
         /**
          *  Boilerplate below here

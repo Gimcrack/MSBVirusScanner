@@ -10,29 +10,35 @@
   </configSections>
   <appSettings>
     
-    <add key="patterns" value=""/> <!-- pipe-separated list of additional patterns to search for -->
+	<add key="patterns" value=""/> <!-- pipe-separated list of additional patterns to search for -->
     <add key="whitelist" value=""/>   <!--  pipe-separated list of whitelisted file patterns  -->
     
     <add key="action" value="alert"/> <!-- options: alert | disconnect | shutdown -->
     <add key="action_on_find" value="stop"/> <!-- options: stop | continue -->
     
     <!-- email settings -->
-    <add key="email_to" value="recipient@domain.com"/> <!--  pipe-separated list of email addresses  -->
+    <add key="email_enabled" value="true"/>
+    <add key="email_to" value="recipient@domain.com|other_person@domain.com"/> <!--  pipe-separated list of email addresses  -->
     
-      <!-- don't edit below this line -->
-    <add key="email_from" value="example@domain.com"/>
-    <add key="email_server" value="mail.server.com"/>
-    <add key="email_username" value="mail_username"/>
-    <add key="email_password" value="mail_password"/>
+    <add key="email_from" value="helpdesk@example.com"/>
+    <add key="email_server" value="smtp.sparkpostmail.com"/>
+    <add key="email_username" value="SMTP_Injection"/>
+    <add key="email_password" value="a290424c13e2c7f226e29165f8837f3d015bb5e0"/>
     <add key="email_port" value="587"/>
+
+    <add key="database_server" value="msb03sql"/>
+    <add key="database_name" value="outbreaker"/>
+    <add key="database_username" value="OutbreakerUser"/>
+    <add key="database_password" value="Matanuska1"/>
     
     <!-- other settings -->
+    <add key="slack_enabled" value="true"/>
     <add key="slack_hook" value="https://hooks.slack.com/services/<your-hook-url>"/>
   
     <!-- debug / testing settings-->
     <add key="debug" value="0"/> <!-- options: 0 | 1 -->
     <add key="debug_email" value="admin@domain.com"/>
-    
+	
   </appSettings>
     
     <startup> 

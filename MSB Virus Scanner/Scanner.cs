@@ -85,7 +85,7 @@ namespace MSB_Virus_Scanner
 
             if (infected)
             {
-                Program.log.write("Infection Found" + Environment.NewLine + "Infected Files" + Environment.NewLine + String.Join(Environment.NewLine, infected_files));
+                Program.log.Write("Infection Found" + Environment.NewLine + "Infected Files" + Environment.NewLine + String.Join(Environment.NewLine, infected_files));
 
                 Console.WriteLine("Infected files");
                 
@@ -119,6 +119,8 @@ namespace MSB_Virus_Scanner
 
                 wildcard_patterns = all_patterns.Except(non_wildcard_patterns);
             }
+
+            Program.log.Write("Pattern Definitions Refreshed.");
         }
 
         public void scanFolder(string path, bool recurse = true)
@@ -129,8 +131,6 @@ namespace MSB_Virus_Scanner
                 if (infected && stop_on_find) return;
 
                 Console.WriteLine("Scanning " + path);
-                Program.log.write("Scanning " + path);
-                
 
                 // low hanging fruit, find simple patterns that do not contain wildcards
                 var files = Directory
@@ -145,7 +145,7 @@ namespace MSB_Virus_Scanner
                     this.infected_files = files;
                     this.matched_pattern = non_wildcard_patterns.First(files.First().Contains);
 
-                    Program.log.write_infection(files, this.matched_pattern);
+                    Program.log.WriteInfection(files, this.matched_pattern);
                     if (stop_on_find) return;
                 }
 
@@ -168,7 +168,7 @@ namespace MSB_Virus_Scanner
                         this.infected_files = files;
                         this.matched_pattern = pattern;
 
-                        Program.log.write_infection(files, this.matched_pattern);
+                        Program.log.WriteInfection(files, this.matched_pattern);
                         if (stop_on_find) break;
                     }
                 }
@@ -190,6 +190,7 @@ namespace MSB_Virus_Scanner
             }
             catch (System.Exception e)
             {
+                Program.log.Write(String.Format("Problem Scanning Computer {0} \n\r Error {1}", Environment.MachineName, e.Message));
                 Console.WriteLine(e.Message);
             }
         }

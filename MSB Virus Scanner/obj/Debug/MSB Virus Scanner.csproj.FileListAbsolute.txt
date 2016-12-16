@@ -1,11 +1,11 @@
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.config
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.pdb
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csprojResolveAssemblyReference.cache
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.xml
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.ConfigForms.resources
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.Service.MSB_Virus_Sentry.resources
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csproj.GenerateResource.Cache
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.dll
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.xml
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb

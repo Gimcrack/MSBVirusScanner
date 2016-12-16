@@ -44,11 +44,12 @@ namespace MSB_Virus_Scanner
                 ListWatchers.Add(watcher);
             }
 
+            Program.log.Write("Sentry In Position Monitoring File System.");
+
             if (Environment.UserInteractive)
             {
                 Console.ReadLine();
-            }
-            
+            } 
         }
 
         private Scanner GetScanner()

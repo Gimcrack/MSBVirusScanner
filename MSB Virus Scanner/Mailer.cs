@@ -49,7 +49,7 @@ namespace MSB_Virus_Scanner
 
             catch (Exception e)
             {
-                Program.log.write("Problem Sending Email" + Environment.NewLine + e.Source + Environment.NewLine + e.GetType().ToString() + Environment.NewLine + e.Message + Environment.NewLine + e.HResult.ToString() + Environment.NewLine + "Message" + Environment.NewLine + message + Environment.NewLine + e.StackTrace.ToString());
+                Program.log.Write("Problem Sending Email" + Environment.NewLine + e.Source + Environment.NewLine + e.GetType().ToString() + Environment.NewLine + e.Message + Environment.NewLine + e.HResult.ToString() + Environment.NewLine + "Message" + Environment.NewLine + message + Environment.NewLine + e.StackTrace.ToString());
             }
         }
     }
