@@ -15,14 +15,18 @@ A simple Windows utility for detecting Crypto/Ransomware Viruses
 * Service Mode - Fully Automated Protection
  * Runs Sentry Mode continuously
  * Runs a full scan daily 
-* All Modes - Take action when an infected files is found
+* Debug Mode (All Modes)
+ * Only sends alerts to debug user
+ * Disables mitigation actions
+ * Does not notify user of infection
+* Mitigate (All Modes) - Take specified action(s) when an infected files is found
  * Alerts user of the infection
  * Optionally disables network connections
  * Optionally shuts down infected computer
-* All Modes - Alert Service Desk or others
+* Notify (All Modes) - Alert Service Desk or others
  * Send email notification (optional)
  * Send Slack notification (optional)
-* All Modes - Logs Activity
+* Log (All Modes) - Logs Activity
  * Log to text file (Scanner Mode)
  * Log to Windows Event Log
  * Log to SQL Database (optional)
