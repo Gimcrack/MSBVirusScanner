@@ -12,7 +12,7 @@ A simple Windows utility for detecting Crypto/Ransomware Viruses
 * Sentry Mode - Monitors local drives for infected files
  * File Creation Events - Files are automatically scanned 
  * File Rename Events - Files are automatically scanned
-* Service Mode - Fully Automated Protection
+* Service Mode - Install as a Windows Service
  * Runs Sentry Mode continuously
  * Runs a full scan daily 
 * Debug Mode (All Modes)
@@ -30,6 +30,12 @@ A simple Windows utility for detecting Crypto/Ransomware Viruses
  * Log to text file (Scanner Mode)
  * Log to Windows Event Log
  * Log to SQL Database (optional)
+
+## Command Line Operation
+
+View the command line instructions by choosing option 6 at the Main Menu.
+
+![CLI](https://github.com/akmatsu/MSBVirusScanner/raw/master/cli.png "CLI")
 
 ## Configuration
 
