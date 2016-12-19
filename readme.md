@@ -44,7 +44,7 @@ Configure the application by choosing option 5 at the Main Menu. You can also ed
 ![Configuration](https://github.com/akmatsu/MSBVirusScanner/raw/master/config.png "Configuration") 
 
 ## Contributing
- I'm always open to suggestiosn. Send me a PR or open an issue with GitHub.
+ I'm always open to suggestions. Send me a PR or open an issue with GitHub.
 
 ## Credits
  Thank you to https://fsrm.experiant.ca for providing the API.

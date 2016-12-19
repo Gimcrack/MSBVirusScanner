@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Configuration.Install;
+using System.ServiceProcess;
 
 namespace MSB_Virus_Scanner
 {
@@ -14,6 +15,11 @@ namespace MSB_Virus_Scanner
 
         public static bool InstallMe()
         {
+            if ( ServiceController.GetServices().Any(s => s.ServiceName == "MSB_Virus_Sentry") )
+            {
+                return true;
+            }
+
             try
             {
                 ManagedInstallerClass.InstallHelper(
@@ -28,6 +34,11 @@ namespace MSB_Virus_Scanner
 
         public static bool UninstallMe()
         {
+            if ( ! ServiceController.GetServices().Any(s => s.ServiceName == "MSB_Virus_Sentry"))
+            {
+                return true;
+            }
+
             try
             {
                 ManagedInstallerClass.InstallHelper(

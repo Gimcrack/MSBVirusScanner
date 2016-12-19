@@ -12,6 +12,8 @@ namespace MSB_Virus_Scanner
 {
     public class Responder
     {
+        public static int display_message_length_ms = 15000; // length of time to display the message to the user.
+
         public string action = ConfigurationManager.AppSettings["action"];
 
         public Slack.Client slack = new Slack.Client( ConfigurationManager.AppSettings["slack_hook"] );
@@ -32,26 +34,25 @@ namespace MSB_Virus_Scanner
                 return;
             }
 
+            warn();
+            notify();
+
             switch( action )
             {
                 case "alert" :
-                    warn();
                     break;
 
                 case "disconnect" :
-                    warn();
                     disconnect();
 
                     break;
 
                 case "shutdown" :
-                    warn();
                     shutdown();
 
                     break;
 
                 default :
-                    warn();
                     disconnect();
                     break;
             }
@@ -140,12 +141,31 @@ namespace MSB_Virus_Scanner
             };
         }
 
-
-
-        private void warn()
+        public static void warn()
         {
-            int display_message_length_ms = 15000; // length of time to display the message to the user.
+            if ( ! Environment.UserInteractive )
+            {
+                ApplicationLauncher.CreateProcessInConsoleSession(
+                    System.Reflection.Assembly.GetEntryAssembly().Location + " /warn", 
+                    true // elevate
+                );
 
+                return;
+            }
+
+            AutoClosingMessageBox.Show(string.Format("{0} {1} {2} {3}",
+                     "Your computer appears to have a virus infection",
+                     Environment.NewLine + Environment.NewLine,
+                     "Please shut down your computer and call Service Desk immediately at x8553.",
+                     "Your computer will be disconnected from the network to prevent further infection."
+                 ),
+                 "Virus Infection Found",
+                 display_message_length_ms
+             );
+        }
+
+        private void notify()
+        {
             string subject = string.Format("MSB Infection Found On {0} - {1}",
                 Environment.MachineName,
                 Environment.UserName
@@ -163,16 +183,7 @@ namespace MSB_Virus_Scanner
             sendSlack();
 
             Console.WriteLine(message);
-
-            AutoClosingMessageBox.Show( string.Format("{0} {1} {2} {3}",
-                    "Your computer appears to have a virus infection",
-                    Environment.NewLine + Environment.NewLine,
-                    "Please shut down your computer and call Service Desk immediately at x8553.",
-                    "Your computer will be disconnected from the network to prevent further infection."
-                ), 
-                "Virus Infection Found", 
-                display_message_length_ms
-            );
+ 
         }
 
         private void sendMail(string message, string subject)

@@ -3,4 +3,16 @@
 \\dsjkb\desoft$\MSBVirusScanner\MSB Virus Scanner.pdb
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.exe
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB_Virus_Scanner.ConfigForms.resources
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB_Virus_Scanner.Service.MSB_Virus_Sentry.resources
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csproj.GenerateResource.Cache
+C:\bin\Release\MSB Virus Scanner.exe.config
+C:\bin\Release\MSB Virus Scanner.exe
+C:\bin\Release\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\MSB Virus Scanner.exe.config
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\MSB Virus Scanner.exe
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\Colorful.Console.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\Newtonsoft.Json.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\Colorful.Console.xml
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csprojResolveAssemblyReference.cache

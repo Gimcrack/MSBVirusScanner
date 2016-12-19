@@ -137,3 +137,11 @@ Affected parameters are:
    logtoconsole = 
    logfile = B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.InstallLog
    assemblypath = B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
+Uninstalling assembly 'B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.InstallLog
+   assemblypath = B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
+Removing EventLog source MSB_Virus_Sentry.
+Service MSB_Virus_Sentry is being removed from the system...
+Service MSB_Virus_Sentry was successfully removed from the system.

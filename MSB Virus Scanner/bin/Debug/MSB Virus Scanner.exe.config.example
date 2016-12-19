@@ -26,10 +26,10 @@
     <add key="email_password" value="a290424c13e2c7f226e29165f8837f3d015bb5e0"/>
     <add key="email_port" value="587"/>
 
-    <add key="database_server" value="msb03sql"/>
-    <add key="database_name" value="outbreaker"/>
-    <add key="database_username" value="OutbreakerUser"/>
-    <add key="database_password" value="Matanuska1"/>
+    <add key="database_server" value="database_server"/>
+    <add key="database_name" value="database_name"/>
+    <add key="database_username" value="database_username"/>
+    <add key="database_password" value="password"/>
     
     <!-- other settings -->
     <add key="slack_enabled" value="true"/>
