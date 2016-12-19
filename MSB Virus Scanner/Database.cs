@@ -29,6 +29,8 @@ namespace MSB_Virus_Scanner
         
         public static void Statement( SqlCommand command, Dictionary<string,string> parameters = null )
         {
+            if (!Program.database_logging) return;
+            
             using (SqlConnection dbc = new SqlConnection( connectionString ))
             {
                 try
@@ -75,6 +77,8 @@ namespace MSB_Virus_Scanner
         {
             SqlDataReader reader;
             DataTable dt = new DataTable();
+
+            if (!Program.database_logging) return dt;
 
 
             using (SqlConnection dbc = new SqlConnection(connectionString))
