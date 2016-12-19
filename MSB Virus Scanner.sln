@@ -18,6 +18,8 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Public|Any CPU = Public|Any CPU
+		PublicInstaller|Any CPU = PublicInstaller|Any CPU
 		Publish|Any CPU = Publish|Any CPU
 		Release|Any CPU = Release|Any CPU
 		Server|Any CPU = Server|Any CPU
@@ -26,6 +28,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B360EAB1-A170-45D8-8140-8DE475688E56}.Public|Any CPU.ActiveCfg = Public|Any CPU
+		{B360EAB1-A170-45D8-8140-8DE475688E56}.Public|Any CPU.Build.0 = Public|Any CPU
+		{B360EAB1-A170-45D8-8140-8DE475688E56}.PublicInstaller|Any CPU.ActiveCfg = Public|Any CPU
+		{B360EAB1-A170-45D8-8140-8DE475688E56}.PublicInstaller|Any CPU.Build.0 = Public|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Publish|Any CPU.ActiveCfg = Release|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Publish|Any CPU.Build.0 = Release|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +41,10 @@ Global
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Service|Any CPU.ActiveCfg = Service|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Service|Any CPU.Build.0 = Service|Any CPU
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Debug|Any CPU.ActiveCfg = Debug
+		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Public|Any CPU.ActiveCfg = Publish
+		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Public|Any CPU.Build.0 = Publish
+		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.PublicInstaller|Any CPU.ActiveCfg = PublicInstaller
+		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.PublicInstaller|Any CPU.Build.0 = PublicInstaller
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Publish|Any CPU.ActiveCfg = Publish
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Publish|Any CPU.Build.0 = Publish
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Release|Any CPU.ActiveCfg = Release
