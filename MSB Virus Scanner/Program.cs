@@ -14,6 +14,7 @@ using System.IO;
 using System.Configuration;
 using System.Security.Principal;
 using System.ServiceProcess;
+using System.Runtime.InteropServices;
 
 
 namespace MSB_Virus_Scanner
@@ -41,7 +42,7 @@ namespace MSB_Virus_Scanner
         public static bool database_logging = Convert.ToBoolean(config["database_enabled"]);
 
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Application.EnableVisualStyles();
 
@@ -54,8 +55,7 @@ namespace MSB_Virus_Scanner
             // init responder
             responder = new Responder();
 
-            Route();
-            
+            Route(); 
         }
 
         private static void Route()
@@ -64,7 +64,6 @@ namespace MSB_Virus_Scanner
             switch (mode)
             {
                 case "Menu":
-
                     ShowMenu();
                     break;
 
@@ -120,6 +119,7 @@ namespace MSB_Virus_Scanner
                 case 2: mode = "Sentry"; break;
                 case 3: mode = "Install"; break;
                 case 4: mode = "Uninstall"; break;
+
                 case 5:
                     Configure();
                     ShowMenu();
@@ -142,15 +142,18 @@ namespace MSB_Virus_Scanner
             Route();
         }
 
-        private static void Install()
+        public static void Install()
         {
 
             if ( IsServiceInstalled() )
             {
                 Console.WriteLine("Service Already Installed");
                 Console.WriteLine("Press <enter> to continue...");
-                Console.ReadLine();
-                ShowMenu();
+                if ( ! unattended )
+                {
+                    Console.ReadLine();
+                    ShowMenu();
+                }
                 return;
             }
 
@@ -158,7 +161,7 @@ namespace MSB_Virus_Scanner
 
 
             // don't display the form to 
-            if ( unattended || Environment.UserInteractive )
+            if ( ! unattended && Environment.UserInteractive )
             {
                 Configure();
             }
@@ -170,10 +173,14 @@ namespace MSB_Virus_Scanner
 
             Console.WriteLine("Service Started");
 
-            Console.WriteLine("Press <enter> to continue...");
+            if (!unattended)
+            {
 
-            Console.ReadLine();
-            ShowMenu();
+                Console.WriteLine("Press <enter> to continue...");
+
+                Console.ReadLine();
+                ShowMenu();
+            }
         }
 
         private static void Configure()
@@ -183,14 +190,17 @@ namespace MSB_Virus_Scanner
             StartService();
         }
 
-        private static void Uninstall()
+        public static void Uninstall()
         {
             if ( ! IsServiceInstalled() )
             {
                 Console.WriteLine("Service Already Uninstalled");
                 Console.WriteLine("Press <enter> to continue...");
-                Console.ReadLine();
-                ShowMenu();
+                if (!unattended)
+                {
+                    Console.ReadLine();
+                    ShowMenu();
+                }
                 return;
             }
 
@@ -199,9 +209,12 @@ namespace MSB_Virus_Scanner
 
             SelfInstaller.UninstallMe();
 
-            Console.WriteLine("Press <enter> to continue...");
-            Console.ReadLine();
-            ShowMenu();
+            if (!unattended)
+            {
+                Console.WriteLine("Press <enter> to continue...");
+                Console.ReadLine();
+                ShowMenu();
+            }
         }
 
         private static void Usage()
@@ -222,7 +235,7 @@ namespace MSB_Virus_Scanner
             return ServiceController.GetServices().Any(s => s.ServiceName == "MSB_Virus_Sentry");
         }
 
-        private static void StopService()
+        public static void StopService()
         {
             if (!IsServiceInstalled()) return;
 
@@ -240,7 +253,7 @@ namespace MSB_Virus_Scanner
             }
         }
 
-        private static void StartService()
+        public static void StartService()
         {
             if (!IsServiceInstalled()) return;
 
@@ -300,6 +313,11 @@ namespace MSB_Virus_Scanner
         private static string GetMode(string[] args)
         {
             if ( !Environment.UserInteractive ) return "Service";
+            
+            using (var identity = System.Security.Principal.WindowsIdentity.GetCurrent())
+            {
+                if ( identity.IsSystem ) return "Service";
+            }
 
 
             if ( args.Length > 0 )
@@ -317,6 +335,18 @@ namespace MSB_Virus_Scanner
                     case "uninstall":
                         unattended = true;
                         return "Uninstall";
+
+                    case "stop" :
+                        StopService();
+                        Environment.Exit(0);
+                        break;
+
+                    case "warn" : // warn the user
+                        IntPtr winHandle = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+                        ShowWindow(winHandle, 2); // minimize the window
+                        Responder.warn();
+                        Environment.Exit(0);
+                        break;
                 }
             }
 
@@ -360,6 +390,9 @@ namespace MSB_Virus_Scanner
             }
             return drives;
         }
+
+        [DllImport( "user32.dll" )]
+        public static extern bool ShowWindow( IntPtr hWnd, int nCmdShow );
     }
 
 
