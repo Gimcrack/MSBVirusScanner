@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSB Virus Scanner", "MSB Virus Scanner\MSB Virus Scanner.csproj", "{B360EAB1-A170-45D8-8140-8DE475688E56}"
 EndProject
@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		config.png = config.png
 		readme.md = readme.md
 		screenshot.png = screenshot.png
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MSB Virus Sentry", "Setup\Setup.vdproj", "{F9EF3B01-629A-41D4-A453-5BD0044BB86F}"
@@ -47,7 +48,7 @@ Global
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.PublicInstaller|Any CPU.Build.0 = PublicInstaller
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Publish|Any CPU.ActiveCfg = Publish
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Publish|Any CPU.Build.0 = Publish
-		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Release|Any CPU.ActiveCfg = Release
+		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Release|Any CPU.ActiveCfg = Publish
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Server|Any CPU.ActiveCfg = Release
 		{F9EF3B01-629A-41D4-A453-5BD0044BB86F}.Service|Any CPU.ActiveCfg = Release
 	EndGlobalSection

@@ -1,6 +1,6 @@
 ﻿namespace MSB_Virus_Scanner.Service
 {
-    partial class ServiceInstaller
+    partial class CustomInstaller
     {
         /// <summary>
         /// Required designer variable.

@@ -10,13 +10,14 @@ namespace MSB_Virus_Scanner
     {
         public static void LogEntry( string message, string action = "", string result = "" )
         {
-            Database.Statement("INSERT INTO [dbo].[log] ( [computername],[action],[result],[comments] ) VALUES (@computername,@action,@result,@comments)",
+            Database.Statement("INSERT INTO [dbo].[log] ( [computername],[action],[result],[comments],[version] ) VALUES (@computername,@action,@result,@comments,@version)",
                 new Dictionary<string, string>()
                 {
                     {"@computername",Environment.MachineName},
                     {"@action",action},
                     {"@result",result},
                     {"@comments",message},
+                    {"@version",Program.version}
                 }
             );
         }

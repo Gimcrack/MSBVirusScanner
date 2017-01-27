@@ -4,39 +4,59 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.ServiceProcess;
-using System.Threading;
 
 namespace MSB_Virus_Scanner.Service
 {
     [RunInstaller(true)]
-    public partial class ServiceInstaller : System.Configuration.Install.Installer
-    {    
-        public ServiceInstaller()
+    public partial class CustomInstaller : System.Configuration.Install.Installer
+    {
+        public CustomInstaller()
         {
             InitializeComponent();
         }
 
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Install(IDictionary stateSaver)
         {
+            if (IsServiceInstalled())
+            {
+                RemoveService();
+            }
+
             base.Install(stateSaver);
 
             StartService();
         }
 
+        private void RemoveService()
+        {
+            System.ServiceProcess.ServiceInstaller ServiceInstallerObj = new System.ServiceProcess.ServiceInstaller();
+            InstallContext Context = new InstallContext(@"C:\temp\MSB_Virus_Sentry.log", null);
+            ServiceInstallerObj.Context = Context;
+            ServiceInstallerObj.ServiceName = "MSB_Virus_Sentry";
+            ServiceInstallerObj.Uninstall(null);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Uninstall(IDictionary savedState)
         {
             StopService();
 
+            RemoveService();
+
             base.Uninstall(savedState);
         }
 
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Commit(IDictionary savedState)
         {
             base.Commit(savedState);
         }
 
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Rollback(IDictionary savedState)
         {
             StopService();
@@ -90,6 +110,5 @@ namespace MSB_Virus_Scanner.Service
             ServiceController sc = new ServiceController("MSB_Virus_Sentry");
             return (sc != null && sc.Status == ServiceControllerStatus.Running);
         }
-
     }
 }

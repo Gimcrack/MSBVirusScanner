@@ -299,35 +299,7 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_141F9AAF1D134E7A839E7D871F38AAC1"
-            {
-            "Name" = "8:Primary output from MSB Virus Scanner (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_9541F5E4565844D497D722EAC57D2256"
-            "FileType" = "3:2"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_08784D74_1F9E_4D32_B52E_1270B3F75771"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_19FD7A4E6AEC4ECFA360283D7832654E"
-            {
-            "Name" = "8:Primary output from MSB Virus Scanner (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_9541F5E4565844D497D722EAC57D2256"
-            "FileType" = "3:2"
-            "InstallAction" = "3:2"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_9F7CECED_8E3E_4D77_8607_908FF435BD69"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_63FA3B7B524D44E7AFBA11190539682B"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_4882A18513264123BC3C88334F0BA68F"
             {
             "Name" = "8:Primary output from MSB Virus Scanner (Active)"
             "Condition" = "8:"
@@ -337,11 +309,11 @@
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_D82F219E_2FFA_4EA7_BEC1_1B3277A5AB7F"
+            "Identifier" = "8:_ECD4A00A_FAFB_4E8E_BD5E_EF0042205C49"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_C02FF13A4EBC4DC0AAF57E882C9D0E73"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_5A84E8719D834A68A1FF31BEFACC1594"
             {
             "Name" = "8:Primary output from MSB Virus Scanner (Active)"
             "Condition" = "8:"
@@ -351,7 +323,35 @@
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_307A312A_FC45_4914_97B2_5F7BA1F336B2"
+            "Identifier" = "8:_16FFF1B9_5208_41A7_A31A_5A076BE9A752"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_B6ED3B7478904C4988C777DEA968B74A"
+            {
+            "Name" = "8:Primary output from MSB Virus Scanner (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_9541F5E4565844D497D722EAC57D2256"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_3E0163AB_8CFE_4158_A043_76759792D2C4"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_CE4B327E73714F28A1FC429F78E90B64"
+            {
+            "Name" = "8:Primary output from MSB Virus Scanner (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_9541F5E4565844D497D722EAC57D2256"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_F992F2C0_D97D_4676_B75D_FC0C914FB032"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
@@ -385,11 +385,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4540F170A722CF0F1D6D108C6C4B7B00"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -456,11 +451,6 @@
             "AssemblyAsmDisplayName" = "8:Colorful.Console, Version=1.0.5.0, Culture=neutral, PublicKeyToken=cc1f2a0d977b1e28, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_87E57DC5739DA9A96C700F9F3DD29C9D"
-                    {
-                    "Name" = "8:Colorful.Console.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Colorful.Console.dll"
             "TargetName" = "8:"
@@ -507,11 +497,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http.WebRequest, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_9981500D8146A6DC70A777B7792DCD0F"
-                    {
-                    "Name" = "8:System.Net.Http.WebRequest.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.WebRequest.dll"
             "TargetName" = "8:"
@@ -538,11 +523,6 @@
             "AssemblyAsmDisplayName" = "8:System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_998457FFF3438E9DB468D1AF31E76EB4"
-                    {
-                    "Name" = "8:System.Web.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Web.Http.dll"
             "TargetName" = "8:"
@@ -569,11 +549,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A86F83C083655A0CF58F7B460C4BD43D"
-                    {
-                    "Name" = "8:System.Net.Http.Formatting.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.Formatting.dll"
             "TargetName" = "8:"
@@ -600,11 +575,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_BC90DFEF01ED2D16DDBF50AB1687592D"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -731,15 +701,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MSB Virus Sentry"
-        "ProductCode" = "8:{55C02D33-71A3-43B2-BCA0-E2357606F1E5}"
-        "PackageCode" = "8:{4C2F403B-FED3-474B-BD37-B7EA1D7DBCBE}"
+        "ProductCode" = "8:{C0174401-1640-4473-B875-BB9DF106663F}"
+        "PackageCode" = "8:{A5B6F48F-2D31-486A-A8D9-24BC6690246F}"
         "UpgradeCode" = "8:{41AC31F5-0D69-4201-8E74-EFA842A3CABA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.10"
+        "ProductVersion" = "8:1.0.37"
         "Manufacturer" = "8:Matsu-Borough"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

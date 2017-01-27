@@ -153,7 +153,9 @@
     </Compile>
     <Compile Include="Responder.cs" />
     <Compile Include="Scanner.cs" />
-    <Compile Include="SelfInstaller.cs" />
+    <Compile Include="SelfInstaller.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Sentry.cs" />
     <Compile Include="Service\Sentry.cs">
       <SubType>Component</SubType>
@@ -161,18 +163,18 @@
     <Compile Include="Service\Sentry.Designer.cs">
       <DependentUpon>Sentry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Service\ServiceInstaller.cs">
+    <Compile Include="Service\SentryInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service\ServiceInstaller.Designer.cs">
-      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    <Compile Include="Service\SentryInstaller.Designer.cs">
+      <DependentUpon>SentryInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="SlackClient.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="App.Base.config"/>
+    <Content Include="App.Base.config" />
     <Content Include="App.Debug.config">
       <DependentUpon>App.Base.config</DependentUpon>
     </Content>
@@ -182,7 +184,6 @@
     <Content Include="App.Release.config">
       <DependentUpon>App.Base.config</DependentUpon>
     </Content>
-    
     <None Include="app.manifest" />
     <None Include="MSB Virus Scanner_TemporaryKey.pfx" />
     <None Include="packages.config" />

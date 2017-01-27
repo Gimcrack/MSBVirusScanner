@@ -1,0 +1,4 @@
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\InstallerAction\bin\Release\InstallerAction.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\InstallerAction\bin\Release\InstallerAction.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\InstallerAction\obj\Release\InstallerAction.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\InstallerAction\obj\Release\InstallerAction.pdb

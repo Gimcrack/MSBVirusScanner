@@ -29,12 +29,13 @@ namespace MSB_Virus_Scanner
             Console.WriteAscii(" *SCANNER* ", Color.LightGoldenrodYellow);
 
 
-            Console.WriteLineFormatted("Service: [{0}] [{1}]",
+            Console.WriteLineFormatted("Service: [{0}] [{1}] [{2}]",
                 Color.Gray,
                 new Formatter[] 
                 { 
                     new Formatter(service_text,service_color),
-                    new Formatter(running_text,running_color)
+                    new Formatter(running_text,running_color),
+                    new Formatter(Program.version, Color.Lime)
                 }   
             );
 

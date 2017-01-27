@@ -21,6 +21,8 @@ namespace MSB_Virus_Scanner
 {
     class Program
     {
+        public static string version = typeof(Program).Assembly.GetName().Version.ToString();
+
         public static NameValueCollection config = ConfigurationManager.AppSettings;
         
         public static string mode;  // Scanner | Sentry
@@ -89,6 +91,10 @@ namespace MSB_Virus_Scanner
                     Uninstall();
                     break;
 
+                case "Exit":
+                    Environment.Exit(0);
+                    break;
+
                 default:
                     Usage();
                     ShowMenu();
@@ -147,16 +153,25 @@ namespace MSB_Virus_Scanner
 
             if ( IsServiceInstalled() )
             {
-                Console.WriteLine("Service Already Installed");
-                Console.WriteLine("Press <enter> to continue...");
-                if ( ! unattended )
+                
+                if (unattended)
                 {
+                    Console.WriteLine("Service Already Installed... Uninstalling...");
+                    SelfInstaller.UninstallMe();
+                }
+
+                else
+                {
+                    Console.WriteLine("Service Already Installed");
+                    Console.WriteLine("Press <enter> to continue...");
                     Console.ReadLine();
                     ShowMenu();
+
+                    return;
                 }
-                return;
             }
 
+            Console.WriteLine("Installing Windows Service");
             SelfInstaller.InstallMe();
 
 
@@ -173,14 +188,13 @@ namespace MSB_Virus_Scanner
 
             Console.WriteLine("Service Started");
 
-            if (!unattended)
-            {
+            if ( unattended ) return;
 
-                Console.WriteLine("Press <enter> to continue...");
 
-                Console.ReadLine();
-                ShowMenu();
-            }
+            
+            Console.WriteLine("Press <enter> to continue...");
+            Console.ReadLine();
+            ShowMenu();
         }
 
         private static void Configure()
@@ -194,27 +208,24 @@ namespace MSB_Virus_Scanner
         {
             if ( ! IsServiceInstalled() )
             {
+                if (unattended) return; 
+
                 Console.WriteLine("Service Already Uninstalled");
-                Console.WriteLine("Press <enter> to continue...");
-                if (!unattended)
-                {
-                    Console.ReadLine();
-                    ShowMenu();
-                }
-                return;
-            }
-
-            StopService(); 
-            
-
-            SelfInstaller.UninstallMe();
-
-            if (!unattended)
-            {
                 Console.WriteLine("Press <enter> to continue...");
                 Console.ReadLine();
                 ShowMenu();
+                return;
             }
+
+            StopService();
+
+            SelfInstaller.UninstallMe();
+
+            if (unattended) return;
+            
+            Console.WriteLine("Press <enter> to continue...");
+            Console.ReadLine();
+            ShowMenu();
         }
 
         private static void Usage()
@@ -312,17 +323,9 @@ namespace MSB_Virus_Scanner
 
         private static string GetMode(string[] args)
         {
-            if ( !Environment.UserInteractive ) return "Service";
-            
-            using (var identity = System.Security.Principal.WindowsIdentity.GetCurrent())
-            {
-                if ( identity.IsSystem ) return "Service";
-            }
-
-
             if ( args.Length > 0 )
             {
-                switch( args[0].Trim( new char[] {'/','-'}).ToLower().Trim() )
+                switch (args[0].Trim(new char[] { '/', '-' }).ToLower().Trim())
                 {
                     case "sentry": return "Sentry";
 
@@ -330,24 +333,34 @@ namespace MSB_Virus_Scanner
 
                     case "install":
                         unattended = true;
-                        return "Install";
+                        Install();
+                        return "Exit";
 
                     case "uninstall":
                         unattended = true;
-                        return "Uninstall";
+                        Uninstall();
+                        return "Exit";
 
-                    case "stop" :
+                    case "stop":
                         StopService();
                         Environment.Exit(0);
                         break;
 
-                    case "warn" : // warn the user
+                    case "warn": // warn the user
                         IntPtr winHandle = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
                         ShowWindow(winHandle, 2); // minimize the window
                         Responder.warn();
                         Environment.Exit(0);
                         break;
                 }
+ 
+            }
+
+            if (!Environment.UserInteractive) return "Service";
+
+            using (var identity = System.Security.Principal.WindowsIdentity.GetCurrent())
+            {
+                if (identity.IsSystem) return "Service";
             }
 
             unattended = false;

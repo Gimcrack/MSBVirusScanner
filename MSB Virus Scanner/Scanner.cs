@@ -69,6 +69,7 @@ namespace MSB_Virus_Scanner
                 "*.xyz",
                 "*.cbf",
                 "*.zzz",
+                "*.stn",
             };
 
             getPatterns();
@@ -136,8 +137,8 @@ namespace MSB_Virus_Scanner
                 var files = Directory
                     .EnumerateFiles(path)
                     .Where(file => non_wildcard_patterns.Any(file.Contains))
-                    .Where(file => ! file_whitelist.Contains(file))
-                    .Where(file => ! file_whitelist.Any(file.Contains));
+                    .Where(file => !file_whitelist.Contains(file))
+                    .Where(file => !file_whitelist.Any(file.Contains));
 
                 if (files.Count() > 0)
                 {
@@ -150,7 +151,7 @@ namespace MSB_Virus_Scanner
                 }
 
                 // deeper scan, scans the folder once per pattern.
-                foreach( string pattern in wildcard_patterns )
+                foreach (string pattern in wildcard_patterns)
                 {
                     if (infected && stop_on_find) break;
 
@@ -158,9 +159,9 @@ namespace MSB_Virus_Scanner
 
                     files = Directory
                         .EnumerateFiles(path, pattern)
-                        .Where(file => ! file_whitelist.Contains(file))
-                        .Where(file => ! file_whitelist.Any(file.Contains))
-                        .Where(file => ! special || file.EndsWith(pattern.Replace("*",String.Empty)));
+                        .Where(file => !file_whitelist.Contains(file))
+                        .Where(file => !file_whitelist.Any(file.Contains))
+                        .Where(file => !special || file.EndsWith(pattern.Replace("*", String.Empty)));
 
                     if (files.Count() > 0)
                     {
@@ -177,7 +178,7 @@ namespace MSB_Virus_Scanner
                 if (infected && stop_on_find) return;
 
 
-                if ( recurse )
+                if (recurse)
                 {
                     foreach (string dir in Directory.EnumerateDirectories(path))
                     {
@@ -188,9 +189,18 @@ namespace MSB_Virus_Scanner
                 }
 
             }
+
+            catch (System.IO.DirectoryNotFoundException e) // ignore
+            { }
+
+
+            catch (System.UnauthorizedAccessException e) // ignore
+            { }
+
+
             catch (System.Exception e)
             {
-                Program.log.Write(String.Format("Problem Scanning Computer {0} \n\r Error {1}", Environment.MachineName, e.Message));
+                Program.log.Write(String.Format("Problem Scanning Computer {0} \n\r Error {1}", e.GetType().ToString(), e.Message));
                 Console.WriteLine(e.Message);
             }
         }
