@@ -51,6 +51,12 @@ namespace MSB_Virus_Scanner.Service
                 Enabled = true,
             };
 
+            Timer UpdateTimer = new Timer()
+            {
+                Interval = 15 * 60 * 1000, // check for updates every 5 minutes
+                Enabled = true
+            };
+
 
             // Timer Handlers
             GuardTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
@@ -62,6 +68,17 @@ namespace MSB_Virus_Scanner.Service
             {
                 Program.Scan();
             };
+
+            UpdateTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
+            {
+                Utility.CheckForUpdates();
+            };
+
+            Utility.CheckForUpdates();
+
+            // get pusher client ready
+            // TODO: Replace PusherHelper with SocketIOHelper
+            //PusherHelper.InitPusher();
 
 
             Guard();

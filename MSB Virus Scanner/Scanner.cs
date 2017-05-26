@@ -46,6 +46,14 @@ namespace MSB_Virus_Scanner
                 @"TEScale.scl",
                 @"!ReadMe.txt",
                 @"vim\vim74\doc\recover.txt",
+                @"vim\vim80\doc\recover.txt",
+                @"htbasic.crypt",
+                @"C:\Program Files\Wireshark\radius\dictionary.alcatel-lucent.aaa",
+                @"C:\Program Files (x86)\PFU\ScanSnap\Receipt\SsReceipt.exe",
+                @"C:\Program Files (x86)\PFU\ScanSnap\Receipt\SsReceipt.exe.config",
+                @"C:\Program Files (x86)\Visioneer\OneTouch 4.0\Profiles\Visioneer Strobe XP 470.isis",
+                @"deps\v8\Makefile.android",
+                @"loading_animat_4b41fc5ceedc968a4ee527dc6061dbdc[1].atlas"
             };
 
             global_whitelist = new List<string>() 
@@ -70,6 +78,15 @@ namespace MSB_Virus_Scanner
                 "*.cbf",
                 "*.zzz",
                 "*.stn",
+                "*.one",
+                "*.1",
+                "*.tmp.exe",
+                "tor.exe",
+                "*.adr",
+                "*.gg",
+                "_ryp",
+                "*.ico"
+
             };
 
             getPatterns();
@@ -190,13 +207,26 @@ namespace MSB_Virus_Scanner
 
             }
 
+            
+
+            catch (System.IO.PathTooLongException e) // ignore
+            { Console.WriteLine(e.Message); }
+
             catch (System.IO.DirectoryNotFoundException e) // ignore
-            { }
+            { Console.WriteLine(e.Message); }
+
+            catch (System.IO.IOException e) // ignore
+            { Console.WriteLine(e.Message); }
 
 
             catch (System.UnauthorizedAccessException e) // ignore
-            { }
+            { Console.WriteLine(e.Message); }
 
+            catch (System.InvalidOperationException e) // ignore
+            { Console.WriteLine(e.Message); }
+
+            catch(System.ArgumentNullException e) // ignore
+            { Console.WriteLine(e.Message); }
 
             catch (System.Exception e)
             {

@@ -133,7 +133,7 @@ namespace MSB_Virus_Scanner.Slack
             ThumbUrl = "https://cdn3.iconfinder.com/data/icons/ose/Warning.png";
             Fields = new List<Field>();
             TimeStamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            Footer = "MSB Virus Scanner";
+            Footer = String.Format("MSB Virus Scanner - v{0}",Program.version);
             FooterIcon = "http://cdn.publicsurplus.com/sms/docviewer/logo/173477/2681997";
         }
 

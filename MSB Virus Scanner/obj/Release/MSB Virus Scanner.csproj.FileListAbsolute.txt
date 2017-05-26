@@ -15,4 +15,7 @@ B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Releas
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\Colorful.Console.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\Newtonsoft.Json.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Release\Colorful.Console.xml
+\\dsjkb\desoft$\MSB_Virus_Sentry\bin\MSB Virus Scanner.exe.config
+\\dsjkb\desoft$\MSB_Virus_Sentry\bin\MSB Virus Scanner.exe
+\\dsjkb\desoft$\MSB_Virus_Sentry\bin\MSB Virus Scanner.pdb
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csprojResolveAssemblyReference.cache
