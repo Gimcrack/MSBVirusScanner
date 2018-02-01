@@ -2,7 +2,7 @@
 
 A simple Windows utility for detecting Crypto/Ransomware Viruses
 
-![Main Menu](https://github.com/akmatsu/MSBVirusScanner/raw/master/screenshot.png "Main Menu")
+![Main Menu](screenshot.png "Main Menu")
 
 ## Operation
 * Scanner Mode - Scans local and removable drives for files matching patterns known to be associated with crypto viruses.  
@@ -35,13 +35,13 @@ A simple Windows utility for detecting Crypto/Ransomware Viruses
 
 View the command line instructions by choosing option 6 at the Main Menu.
 
-![CLI](https://github.com/akmatsu/MSBVirusScanner/raw/master/cli.png "CLI")
+![CLI](cli.png "CLI")
 
 ## Configuration
 
 Configure the application by choosing option 5 at the Main Menu. You can also edit the .config file directly.
 
-![Configuration](https://github.com/akmatsu/MSBVirusScanner/raw/master/config.png "Configuration") 
+![Configuration](config.png "Configuration") 
 
 ## Contributing
  I'm always open to suggestions. Send me a PR or open an issue with GitHub.
