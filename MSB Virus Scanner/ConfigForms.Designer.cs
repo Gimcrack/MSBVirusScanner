@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Label label11;
             this.label1 = new System.Windows.Forms.Label();
             this.email_to = new System.Windows.Forms.TextBox();
             this.btn_save = new System.Windows.Forms.Button();
@@ -43,33 +44,27 @@
             this.email_port = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.email_enabled = new System.Windows.Forms.CheckBox();
             this.slack_enabled = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.slack_webhook = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.email_enabled = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.action = new System.Windows.Forms.ListBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.action_on_find = new System.Windows.Forms.ListBox();
-            this.debug = new System.Windows.Forms.CheckBox();
-            this.debug_email = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.database_enabled = new System.Windows.Forms.CheckBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.database_server = new System.Windows.Forms.TextBox();
-            this.database_name = new System.Windows.Forms.TextBox();
-            this.database_username = new System.Windows.Forms.TextBox();
-            this.database_password = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.patterns = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.whitelist = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.patterns = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.debug_email = new System.Windows.Forms.TextBox();
+            this.debug = new System.Windows.Forms.CheckBox();
+            this.action_on_find = new System.Windows.Forms.ListBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.action = new System.Windows.Forms.ListBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.database_enabled = new System.Windows.Forms.CheckBox();
+            this.api_base_url = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -219,6 +214,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Email Alerts";
             // 
+            // email_enabled
+            // 
+            this.email_enabled.AutoSize = true;
+            this.email_enabled.Location = new System.Drawing.Point(6, 19);
+            this.email_enabled.Name = "email_enabled";
+            this.email_enabled.Size = new System.Drawing.Size(65, 17);
+            this.email_enabled.TabIndex = 18;
+            this.email_enabled.Text = "Enabled";
+            this.email_enabled.UseVisualStyleBackColor = true;
+            // 
             // slack_enabled
             // 
             this.slack_enabled.AutoSize = true;
@@ -257,16 +262,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Slack Alerts";
             // 
-            // email_enabled
-            // 
-            this.email_enabled.AutoSize = true;
-            this.email_enabled.Location = new System.Drawing.Point(6, 19);
-            this.email_enabled.Name = "email_enabled";
-            this.email_enabled.Size = new System.Drawing.Size(65, 17);
-            this.email_enabled.TabIndex = 18;
-            this.email_enabled.Text = "Enabled";
-            this.email_enabled.UseVisualStyleBackColor = true;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.whitelist);
@@ -287,14 +282,89 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "General Settings";
             // 
-            // label8
+            // whitelist
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 178);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(85, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Mitigation Action";
+            this.whitelist.AcceptsReturn = true;
+            this.whitelist.Location = new System.Drawing.Point(7, 112);
+            this.whitelist.Multiline = true;
+            this.whitelist.Name = "whitelist";
+            this.whitelist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.whitelist.Size = new System.Drawing.Size(359, 52);
+            this.whitelist.TabIndex = 10;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(12, 95);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(179, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "White-Listed Patterns (One Per Line)";
+            // 
+            // patterns
+            // 
+            this.patterns.AcceptsReturn = true;
+            this.patterns.Location = new System.Drawing.Point(7, 34);
+            this.patterns.Multiline = true;
+            this.patterns.Name = "patterns";
+            this.patterns.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.patterns.Size = new System.Drawing.Size(359, 54);
+            this.patterns.TabIndex = 8;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(10, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(237, 13);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "Additional Patterns To Search For (One Per Line)";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(10, 334);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(111, 13);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "Send Debug Email To";
+            // 
+            // debug_email
+            // 
+            this.debug_email.Location = new System.Drawing.Point(7, 353);
+            this.debug_email.Name = "debug_email";
+            this.debug_email.Size = new System.Drawing.Size(359, 20);
+            this.debug_email.TabIndex = 5;
+            // 
+            // debug
+            // 
+            this.debug.AutoSize = true;
+            this.debug.Location = new System.Drawing.Point(10, 310);
+            this.debug.Name = "debug";
+            this.debug.Size = new System.Drawing.Size(124, 17);
+            this.debug.TabIndex = 4;
+            this.debug.Text = "Enable Debug Mode";
+            this.debug.UseVisualStyleBackColor = true;
+            // 
+            // action_on_find
+            // 
+            this.action_on_find.FormattingEnabled = true;
+            this.action_on_find.Items.AddRange(new object[] {
+            "Stop",
+            "Continue"});
+            this.action_on_find.Location = new System.Drawing.Point(9, 267);
+            this.action_on_find.Name = "action_on_find";
+            this.action_on_find.Size = new System.Drawing.Size(359, 30);
+            this.action_on_find.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 250);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(156, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Scanner Mode - Action On Find";
             // 
             // action
             // 
@@ -308,183 +378,52 @@
             this.action.Size = new System.Drawing.Size(359, 43);
             this.action.TabIndex = 1;
             // 
-            // label9
+            // label8
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(9, 250);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(156, 13);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "Scanner Mode - Action On Find";
-            // 
-            // action_on_find
-            // 
-            this.action_on_find.FormattingEnabled = true;
-            this.action_on_find.Items.AddRange(new object[] {
-            "Stop",
-            "Continue"});
-            this.action_on_find.Location = new System.Drawing.Point(9, 267);
-            this.action_on_find.Name = "action_on_find";
-            this.action_on_find.Size = new System.Drawing.Size(359, 30);
-            this.action_on_find.TabIndex = 3;
-            // 
-            // debug
-            // 
-            this.debug.AutoSize = true;
-            this.debug.Location = new System.Drawing.Point(10, 310);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(124, 17);
-            this.debug.TabIndex = 4;
-            this.debug.Text = "Enable Debug Mode";
-            this.debug.UseVisualStyleBackColor = true;
-            // 
-            // debug_email
-            // 
-            this.debug_email.Location = new System.Drawing.Point(7, 353);
-            this.debug_email.Name = "debug_email";
-            this.debug_email.Size = new System.Drawing.Size(359, 20);
-            this.debug_email.TabIndex = 5;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(10, 334);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(111, 13);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "Send Debug Email To";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.database_password);
-            this.groupBox4.Controls.Add(this.database_username);
-            this.groupBox4.Controls.Add(this.database_name);
-            this.groupBox4.Controls.Add(this.database_server);
-            this.groupBox4.Controls.Add(this.label14);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.database_enabled);
-            this.groupBox4.Location = new System.Drawing.Point(12, 404);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(374, 155);
-            this.groupBox4.TabIndex = 20;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Database Settings";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 178);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(85, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Mitigation Action";
             // 
             // database_enabled
             // 
             this.database_enabled.AutoSize = true;
             this.database_enabled.Location = new System.Drawing.Point(7, 20);
             this.database_enabled.Name = "database_enabled";
-            this.database_enabled.Size = new System.Drawing.Size(149, 17);
+            this.database_enabled.Size = new System.Drawing.Size(167, 17);
             this.database_enabled.TabIndex = 0;
-            this.database_enabled.Text = "Enable Database Logging";
+            this.database_enabled.Text = "Enable Dashboard Interaction";
             this.database_enabled.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 47);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(38, 13);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Server";
+            label11.AutoSize = true;
+            label11.Location = new System.Drawing.Point(9, 47);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(56, 13);
+            label11.TabIndex = 1;
+            label11.Text = "Base URL";
             // 
-            // label12
+            // api_base_url
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 78);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Database";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
+            this.api_base_url.Location = new System.Drawing.Point(66, 44);
+            this.api_base_url.Name = "api_base_url";
+            this.api_base_url.Size = new System.Drawing.Size(302, 20);
+            this.api_base_url.TabIndex = 5;
             // 
-            // label13
+            // groupBox4
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 103);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Username";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 128);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 13);
-            this.label14.TabIndex = 4;
-            this.label14.Text = "Password";
-            // 
-            // database_server
-            // 
-            this.database_server.Location = new System.Drawing.Point(66, 44);
-            this.database_server.Name = "database_server";
-            this.database_server.Size = new System.Drawing.Size(302, 20);
-            this.database_server.TabIndex = 5;
-            // 
-            // database_name
-            // 
-            this.database_name.Location = new System.Drawing.Point(66, 71);
-            this.database_name.Name = "database_name";
-            this.database_name.Size = new System.Drawing.Size(302, 20);
-            this.database_name.TabIndex = 6;
-            // 
-            // database_username
-            // 
-            this.database_username.Location = new System.Drawing.Point(66, 98);
-            this.database_username.Name = "database_username";
-            this.database_username.Size = new System.Drawing.Size(302, 20);
-            this.database_username.TabIndex = 7;
-            // 
-            // database_password
-            // 
-            this.database_password.Location = new System.Drawing.Point(66, 125);
-            this.database_password.Name = "database_password";
-            this.database_password.PasswordChar = '*';
-            this.database_password.Size = new System.Drawing.Size(302, 20);
-            this.database_password.TabIndex = 8;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(10, 20);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(237, 13);
-            this.label15.TabIndex = 7;
-            this.label15.Text = "Additional Patterns To Search For (One Per Line)";
-            // 
-            // patterns
-            // 
-            this.patterns.AcceptsReturn = true;
-            this.patterns.Location = new System.Drawing.Point(7, 34);
-            this.patterns.Multiline = true;
-            this.patterns.Name = "patterns";
-            this.patterns.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.patterns.Size = new System.Drawing.Size(359, 54);
-            this.patterns.TabIndex = 8;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 95);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(179, 13);
-            this.label16.TabIndex = 9;
-            this.label16.Text = "White-Listed Patterns (One Per Line)";
-            // 
-            // whitelist
-            // 
-            this.whitelist.AcceptsReturn = true;
-            this.whitelist.Location = new System.Drawing.Point(7, 112);
-            this.whitelist.Multiline = true;
-            this.whitelist.Name = "whitelist";
-            this.whitelist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.whitelist.Size = new System.Drawing.Size(359, 52);
-            this.whitelist.TabIndex = 10;
+            this.groupBox4.Controls.Add(this.api_base_url);
+            this.groupBox4.Controls.Add(label11);
+            this.groupBox4.Controls.Add(this.database_enabled);
+            this.groupBox4.Location = new System.Drawing.Point(12, 404);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(374, 81);
+            this.groupBox4.TabIndex = 20;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "API Dashboard Settings";
             // 
             // ConfigForms
             // 
@@ -545,19 +484,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox debug_email;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.CheckBox database_enabled;
-        private System.Windows.Forms.TextBox database_password;
-        private System.Windows.Forms.TextBox database_username;
-        private System.Windows.Forms.TextBox database_name;
-        private System.Windows.Forms.TextBox database_server;
         private System.Windows.Forms.TextBox whitelist;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox patterns;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox database_enabled;
+        private System.Windows.Forms.TextBox api_base_url;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }

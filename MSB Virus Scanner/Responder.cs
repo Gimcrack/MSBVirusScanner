@@ -75,9 +75,21 @@ namespace MSB_Virus_Scanner
                 Program.log.Get()
             );
 
+            sendDashboard();
+
             sendMail(message, subject);
 
             sendSlack();
+
+            this.scanner.Reset();
+        }
+
+        private void sendDashboard()
+        {
+            foreach(string file in scanner.infected_files)
+            {
+                Program.dashboard.MatchedFile(file, scanner.matched_pattern);
+            }
         }
 
         private void sendSlack()
@@ -177,6 +189,8 @@ namespace MSB_Virus_Scanner
                 Environment.NewLine,
                 String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files)
             );
+
+            sendDashboard();
 
             sendMail(message, subject);
 

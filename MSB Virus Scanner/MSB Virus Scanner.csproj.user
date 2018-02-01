@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>\\dsjkb\desoft%24\MSBVirusScanner\</PublishUrlHistory>
+    <InstallUrlHistory />
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>
+    </StartArguments>
+    <StartWorkingDirectory>C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Service|AnyCPU'">
+    <StartWorkingDirectory>B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\</StartWorkingDirectory>
+    <StartArguments>
+    </StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Public|AnyCPU'">
+    <StartWorkingDirectory>B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartWorkingDirectory>F:\working\</StartWorkingDirectory>
+  </PropertyGroup>
+</Project>

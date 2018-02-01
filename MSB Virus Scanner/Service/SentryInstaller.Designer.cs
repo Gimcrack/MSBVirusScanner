@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -80,6 +81,7 @@ namespace MSB_Virus_Scanner.Service
 
                     while (s.Status != ServiceControllerStatus.Running)
                     {
+                        Console.WriteLine("Waiting for service to start - status {0}", s.Status.ToString());
                         Thread.Sleep(1000);
                         s.Refresh();
                     }
@@ -93,7 +95,23 @@ namespace MSB_Virus_Scanner.Service
 
             foreach (ServiceController s in services)
             {
-                if (s.ServiceName == this.serviceInstaller1.ServiceName)
+                if (s.ServiceName == "MSB_Virus_Sentry")
+                {
+                    if (s.Status != ServiceControllerStatus.Stopped)
+                    {
+                        s.Stop();
+
+                        while (s.Status != ServiceControllerStatus.Stopped)
+                        {
+                            Thread.Sleep(1000);
+                            s.Refresh();
+                        }
+                    }
+
+                    break;
+                }
+
+                if (s.ServiceName == "MSB_Sentry_Monitor")
                 {
                     if (s.Status != ServiceControllerStatus.Stopped)
                     {
@@ -117,12 +135,23 @@ namespace MSB_Virus_Scanner.Service
 
             foreach (ServiceController s in services)
             {
-                if (s.ServiceName == this.serviceInstaller1.ServiceName)
+                if (s.ServiceName == "MSB_Virus_Sentry")
                 {
                     ServiceInstaller ServiceInstallerObj = new ServiceInstaller();
                     ServiceInstallerObj.Context = new System.Configuration.Install.InstallContext();
                     ServiceInstallerObj.Context = Context;
                     ServiceInstallerObj.ServiceName = "MSB_Virus_Sentry";
+                    ServiceInstallerObj.Uninstall(null);
+
+                    break;
+                }
+
+                if (s.ServiceName == "MSB_Sentry_Monitor")
+                {
+                    ServiceInstaller ServiceInstallerObj = new ServiceInstaller();
+                    ServiceInstallerObj.Context = new System.Configuration.Install.InstallContext();
+                    ServiceInstallerObj.Context = Context;
+                    ServiceInstallerObj.ServiceName = "MSB_Sentry_Monitor";
                     ServiceInstallerObj.Uninstall(null);
 
                     break;

@@ -1,0 +1,13 @@
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB_Sentry_Monitor.ProjectInstaller.resources
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Sentry Monitor.csproj.GenerateResource.Cache
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB_Sentry_Monitor\MSB Service Monitor.exe.config
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB_Sentry_Monitor\MSB Service Monitor.exe.manifest
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB_Sentry_Monitor\MSB Service Monitor.application
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB_Sentry_Monitor\MSB Service Monitor.exe
+\\dsjkb\desoft$\MSB_Virus_Sentry\MSB_Sentry_Monitor\MSB Service Monitor.pdb
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.TrustInfo.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.exe.manifest
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.application
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.exe
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.pdb
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Sentry Monitor.csprojResolveAssemblyReference.cache

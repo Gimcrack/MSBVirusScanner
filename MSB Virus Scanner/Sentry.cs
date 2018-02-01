@@ -14,12 +14,12 @@ namespace MSB_Virus_Scanner
         public List<string> Infections;
         
         public Scanner scanner;
-        
-        public Sentry()
+
+        public void Init()
         {
+            Program.log.Write("Initializing Sentry");
+
             GetScanner();
-            
-            Console.WriteLine("Observing file system for changes.");
 
             ListWatchers = new List<FileSystemWatcher>();
 
@@ -27,8 +27,14 @@ namespace MSB_Virus_Scanner
 
             FileSystemWatcher watcher;
 
-            foreach (DriveInfo drive in Program.GetLocalDrives() )
+            foreach (DriveInfo drive in Program.GetLocalDrives())
             {
+                // make sure the path is valid e.g. A:\
+                if (!Directory.Exists(drive.RootDirectory.ToString()))
+                {
+                    continue;
+                }
+
                 watcher = new FileSystemWatcher()
                 {
                     Path = drive.RootDirectory.ToString(),
@@ -44,12 +50,13 @@ namespace MSB_Virus_Scanner
                 ListWatchers.Add(watcher);
             }
 
+            Console.WriteLine("Observing file system for changes.");
             Program.log.Write("Sentry In Position Monitoring File System.");
 
             if (Environment.UserInteractive)
             {
                 Console.ReadLine();
-            } 
+            }
         }
 
         private Scanner GetScanner()
@@ -74,15 +81,21 @@ namespace MSB_Virus_Scanner
             if ( Infections.Contains(path) ) return; // already reported
 
             //if (Path.GetDirectoryName(path) == Path.GetDirectoryName(Logger.logPath))
-            
-            scanner.scanFolder(Path.GetDirectoryName(path), false);
 
-            if (scanner.infected)
+            try
             {
-                Program.responder.respond(scanner);
-                
-                Infections.Add(path);
+                scanner.scanFolder(Path.GetDirectoryName(path), false);
+
+                if (scanner.infected)
+                {
+                    Program.responder.respond(scanner);
+
+                    Infections.Add(path);
+                }
             }
+
+            catch (System.IO.PathTooLongException e) // ignore
+            { Console.WriteLine(e.Message); }
         }
 
         public void CleanUp()

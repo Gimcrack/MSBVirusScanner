@@ -14,8 +14,6 @@ namespace MSB_Virus_Scanner.Service
 {
     partial class MSB_Virus_Sentry : ServiceBase
     {
-        private MSB_Virus_Scanner.Sentry sentry;
-
         public MSB_Virus_Sentry()
         {
             InitializeComponent();
@@ -30,30 +28,21 @@ namespace MSB_Virus_Scanner.Service
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
 
-            // Update the service state to Running.
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            
 
-            Program.log.Write("Sentry Service Started.");
+            //Program.log.Write("Sentry Service Started.");
 
             
             // Setup Timers
             Timer GuardTimer = new Timer()
             {
-                Interval = 24 * 60 * 60 * 1000, // renew once per day
+                Interval = 30 * 1000, // wait 30 sec to start 
                 Enabled = true,
             };
 
-
-            Timer ScanTimer = new Timer()
+            Timer HeartbeatTimer = new Timer()
             {
-                Interval = 2 * 24 * 60 * 60 * 1000, // scan once per 2 days
-                Enabled = true,
-            };
-
-            Timer UpdateTimer = new Timer()
-            {
-                Interval = 15 * 60 * 1000, // check for updates every 5 minutes
+                Interval = 10 * 60 * 1000,  // send a heartbeat every 10 min
                 Enabled = true
             };
 
@@ -61,42 +50,38 @@ namespace MSB_Virus_Scanner.Service
             // Timer Handlers
             GuardTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
             {
+                GuardTimer.Interval = 24 * 60 * 60 * 1000; // renew once per day
                 Guard();
             };
 
-            ScanTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
+            HeartbeatTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
             {
-                Program.Scan();
+                Program.dashboard.Heartbeat();
             };
 
-            UpdateTimer.Elapsed += (object sender, ElapsedEventArgs e) =>
-            {
-                Utility.CheckForUpdates();
-            };
+            // Update the service state to Running.
+            serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
+            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            Utility.CheckForUpdates();
-
-            // get pusher client ready
-            // TODO: Replace PusherHelper with SocketIOHelper
-            //PusherHelper.InitPusher();
-
-
-            Guard();
-            
         }
 
         protected override void OnStop()
         {
-            sentry.CleanUp();
+            if (Program.sentry != null)
+            {
+                Program.sentry.CleanUp();
+            }
         }
 
-        private void Guard()
+        public void Guard()
         {
-            if (sentry != null)
+            if (Program.sentry != null)
             {
-                sentry.CleanUp();
+                Program.sentry.CleanUp();
             }
-            sentry = new MSB_Virus_Scanner.Sentry();
+
+            Program.sentry = new MSB_Virus_Scanner.Sentry();
+            Program.sentry.Init();
         }
 
 
@@ -118,13 +103,13 @@ namespace MSB_Virus_Scanner.Service
         [StructLayout(LayoutKind.Sequential)]
         public struct ServiceStatus
         {
-            public long dwServiceType;
+            public uint dwServiceType;
             public ServiceState dwCurrentState;
-            public long dwControlsAccepted;
-            public long dwWin32ExitCode;
-            public long dwServiceSpecificExitCode;
-            public long dwCheckPoint;
-            public long dwWaitHint;
+            public uint dwControlsAccepted;
+            public uint dwWin32ExitCode;
+            public uint dwServiceSpecificExitCode;
+            public uint dwCheckPoint;
+            public uint dwWaitHint;
         };
 
         [DllImport("advapi32.dll", SetLastError = true)]

@@ -1,18 +1,59 @@
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.config
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.pdb
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.CodeAnalysisLog.xml
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.lastcodeanalysissucceeded
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\EngineIoClientDotNet.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\PusherClient.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\SocketIoClientDotNet.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\WebSocket4Net.dll
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.xml
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.xml
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\PusherClient.xml
-B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csprojResolveAssemblyReference.cache
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.ConfigForms.resources
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.Service.MSB_Virus_Sentry.resources
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csproj.GenerateResource.Cache
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
 B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csprojResolveAssemblyReference.cache
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Common.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Interfaces.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Redis.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Text.dll
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Common.xml
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Interfaces.xml
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Redis.xml
+B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Text.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csprojResolveAssemblyReference.cache
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.ConfigForms.resources
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.Service.MSB_Virus_Sentry.resources
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csproj.GenerateResource.Cache
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.config
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.pdb
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Common.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Interfaces.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Redis.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Text.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\StackExchange.Redis.StrongName.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Core.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Interfaces.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Linq.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.PlatformServices.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Windows.Threading.dll
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Common.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Interfaces.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Redis.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Text.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\StackExchange.Redis.StrongName.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Core.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Interfaces.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Linq.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.PlatformServices.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Windows.Threading.xml
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb
+C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.pdb

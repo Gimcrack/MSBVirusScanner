@@ -73,10 +73,7 @@ namespace MSB_Virus_Scanner
 
             //database settings
             this.database_enabled.Checked = Convert.ToBoolean(config["database_enabled"]);
-            this.database_name.Text = config["database_name"].ToString();
-            this.database_server.Text = config["database_server"].ToString();
-            this.database_username.Text = config["database_username"].ToString();
-            this.database_password.Text = config["database_password"].ToString();
+            this.api_base_url.Text = config["api_base_url"].ToString();
 
             //slack settings
             this.slack_enabled.Checked = Convert.ToBoolean( config["slack_enabled"] );
@@ -114,11 +111,7 @@ namespace MSB_Virus_Scanner
             SetSetting("email_port",this.email_port.Text);
 
             SetSetting("database_enabled", (this.database_enabled.Checked) ? "true" : "false");
-            SetSetting("database_server", this.database_server.Text);
-            SetSetting("database_name", this.database_name.Text);
-            SetSetting("database_username", this.database_username.Text);
-            SetSetting("database_password", this.database_password.Text);          
-
+            SetSetting("api_base_url", this.api_base_url.Text);
             SetSetting("slack_enabled",(this.email_enabled.Checked) ? "true" : "false");
             SetSetting("slack_hook",this.slack_webhook.Text);
 

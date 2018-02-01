@@ -17,7 +17,7 @@ namespace MSB_Virus_Scanner
             Add(new EventLogger());
 
             if (Program.database_logging) 
-                Add(new DatabaseLogger());
+                Add(new DashboardLogger());
         }
 
         // add a Logger 

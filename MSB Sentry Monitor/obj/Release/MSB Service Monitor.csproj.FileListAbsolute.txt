@@ -1,0 +1,13 @@
+C:\bin\release\MSB Service Monitor.exe.config
+C:\bin\release\MSB Service Monitor.exe.manifest
+C:\bin\release\MSB Service Monitor.application
+C:\bin\release\MSB Service Monitor.exe
+C:\bin\release\MSB Service Monitor.pdb
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.TrustInfo.xml
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.exe.manifest
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.application
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.exe
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.pdb
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB_Windows_Update_Management.ProjectInstaller.resources
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.csproj.GenerateResource.Cache
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Release\MSB Service Monitor.csprojResolveAssemblyReference.cache

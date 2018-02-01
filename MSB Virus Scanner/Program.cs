@@ -37,6 +37,14 @@ namespace MSB_Virus_Scanner
 
         public static LogHandler log;
 
+        public static EchoHelper echo;
+
+        public static Api api;
+
+        public static Dashboard dashboard;
+
+        public static Redis redis;
+
         public static Service.MSB_Virus_Sentry MVS;
 
         public static int debug = Int32.Parse(config["debug"]);
@@ -46,18 +54,72 @@ namespace MSB_Virus_Scanner
         [STAThread]
         public static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
+            try
+            {
+                HandleExceptions();
 
-            // set up the log handler
-            log = new LogHandler();
+                Application.EnableVisualStyles();
 
-            // get the mode of operation
-            mode = GetMode(args);
+                // set up the log handler
+                log = new LogHandler();
 
-            // init responder
-            responder = new Responder();
+                // set up the redis connectino
+                redis = new Redis();
 
-            Route(); 
+                // get the mode of operation
+                mode = GetMode(args);
+
+                // init responder
+                responder = new Responder();
+
+                // init api helper
+                api = new Api();
+
+                // init dashboard helper
+                dashboard = new Dashboard();
+
+                dashboard.Register();
+                dashboard.Fetch();
+
+                // send the heartbeat
+                dashboard.Heartbeat();
+                
+                // init echo listener
+                echo = new EchoHelper();
+
+                echo.init();
+
+                Route();
+            }
+            catch(Exception e)
+            {
+                Program.log.Write("Unhandled Exception. " + e.Message);
+                Program.log.Write(e.StackTrace);
+            }
+        }
+
+        private static void HandleExceptions()
+        {
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            
+            System.AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
+
+            Application.ThreadException += new ThreadExceptionEventHandler(UnhandledExceptionHandler);
+        }
+
+        private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            Program.log.Write("Unhandled Exception. " + e.Message);
+            Program.log.Write(e.StackTrace);
+        }
+
+        private static void UnhandledExceptionHandler(object sender, ThreadExceptionEventArgs args)
+        {
+            Exception e = args.Exception;
+            Program.log.Write("Unhandled Exception. " + e.Message);
+            Program.log.Write(e.StackTrace);
         }
 
         private static void Route()
@@ -89,6 +151,10 @@ namespace MSB_Virus_Scanner
 
                 case "Uninstall":
                     Uninstall();
+                    break;
+
+                case "Update":
+                    Update();
                     break;
 
                 case "Exit":
@@ -125,18 +191,19 @@ namespace MSB_Virus_Scanner
                 case 2: mode = "Sentry"; break;
                 case 3: mode = "Install"; break;
                 case 4: mode = "Uninstall"; break;
+                case 5: mode = "Update"; break;
 
-                case 5:
+                case 6:
                     Configure();
                     ShowMenu();
                     return;
 
-                case 6:
+                case 7:
                     Usage();
                     ShowMenu();
                     return;
 
-                case 7:
+                case 8:
                     Environment.Exit(0);
                     return;
 
@@ -190,8 +257,14 @@ namespace MSB_Virus_Scanner
 
             if ( unattended ) return;
 
+            Console.WriteLine("Press <enter> to continue...");
+            Console.ReadLine();
+            ShowMenu();
+        }
 
-            
+        private static void Update()
+        {
+            Utility.CheckForUpdates();
             Console.WriteLine("Press <enter> to continue...");
             Console.ReadLine();
             ShowMenu();
@@ -276,6 +349,7 @@ namespace MSB_Virus_Scanner
                 while (sc.Status != ServiceControllerStatus.Running)
                 {
                     Thread.Sleep(1000);
+                    Console.WriteLine("Waiting for service to start");
                     sc.Refresh();
                 }
             }
@@ -283,17 +357,31 @@ namespace MSB_Virus_Scanner
 
         private static void Service()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                MVS = new Service.MSB_Virus_Sentry()
-            };
-            ServiceBase.Run(ServicesToRun);
+            try
+            {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[] 
+                { 
+                    MVS = new Service.MSB_Virus_Sentry()
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
+            catch ( System.IO.FileLoadException e )
+            {
+                Program.log.Write(e.Message);
+            }
+
+            catch (Exception e)
+            {
+                Program.log.Write(e.Message);
+            }
         }
 
         private static void Sentry()
         {
             sentry = new Sentry();
+
+            sentry.Init();
         }
 
 
@@ -318,6 +406,14 @@ namespace MSB_Virus_Scanner
         public static void Scan()
         {
             Scanner();
+        }
+
+        public static void ScanAll()
+        {
+            log.Add(new Logger());
+
+            scanner = new Scanner(responder);
+            scanner.DontStopOnFind().Scan();
         }
 
 

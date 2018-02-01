@@ -1,0 +1,18 @@
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.csprojResolveAssemblyReference.cache
+\\dsjkb\desoft$\MSBWindowsUpdateManagementSvc\Monitor\MSB Service Monitor.exe.config
+\\dsjkb\desoft$\MSBWindowsUpdateManagementSvc\Monitor\MSB Service Monitor.exe.manifest
+\\dsjkb\desoft$\MSBWindowsUpdateManagementSvc\Monitor\MSB Service Monitor.application
+\\dsjkb\desoft$\MSBWindowsUpdateManagementSvc\Monitor\MSB Service Monitor.exe
+\\dsjkb\desoft$\MSBWindowsUpdateManagementSvc\Monitor\MSB Service Monitor.pdb
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.TrustInfo.xml
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.exe.manifest
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.application
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.exe
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.pdb
+\\dsjkb\desoft$\MSBServiceMonitor\MSB Service Monitor.exe.config
+\\dsjkb\desoft$\MSBServiceMonitor\MSB Service Monitor.exe.manifest
+\\dsjkb\desoft$\MSBServiceMonitor\MSB Service Monitor.application
+\\dsjkb\desoft$\MSBServiceMonitor\MSB Service Monitor.exe
+\\dsjkb\desoft$\MSBServiceMonitor\MSB Service Monitor.pdb
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB_Windows_Update_Management.ProjectInstaller.resources
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\PublishMonitor\MSB Service Monitor.csproj.GenerateResource.Cache

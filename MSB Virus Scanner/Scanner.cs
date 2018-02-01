@@ -19,81 +19,64 @@ namespace MSB_Virus_Scanner
 
         private Boolean stop_on_find;
 
+        private Responder _responder;
+
         public string matched_pattern;
+
+        private int _scanned_files_count;
+        private int _prev_files_count;
+        private bool _send_counts = false;
+        private bool _stop = false;
 
         public IEnumerable<string> infected_files;
 
         private IEnumerable<string> non_wildcard_patterns;
 
+        private IEnumerable<string> dot_patterns;
+
+        private IEnumerable<string> non_dot_patterns;
+
         private IEnumerable<string> wildcard_patterns;
 
         private IEnumerable<string> file_whitelist;
-
-        private IEnumerable<string> global_whitelist;
 
         public Scanner()
         {
             stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
 
-            file_whitelist = new List<string>()
-            {
-                @"C:\Program Files (x86)\PostgreSQL\doc\contrib\README.pgcrypto",
-                @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\ViewModels\Tools\!ReadMe.txt",
-                @"C:\Program Files\WindowsApps\Microsoft.FreshPaint_3.1.10156.0_x86__8wekyb3d8bbwe\Views\Controls\!ReadMe.txt",
-                @"CS-USAH.cry",
-                @"C:\Program Files\Git\usr\share\vim\vim74\doc\recover.txt",
-                @"TEDefault.scl",
-                @"TEScale.scl",
-                @"!ReadMe.txt",
-                @"vim\vim74\doc\recover.txt",
-                @"vim\vim80\doc\recover.txt",
-                @"htbasic.crypt",
-                @"C:\Program Files\Wireshark\radius\dictionary.alcatel-lucent.aaa",
-                @"C:\Program Files (x86)\PFU\ScanSnap\Receipt\SsReceipt.exe",
-                @"C:\Program Files (x86)\PFU\ScanSnap\Receipt\SsReceipt.exe.config",
-                @"C:\Program Files (x86)\Visioneer\OneTouch 4.0\Profiles\Visioneer Strobe XP 470.isis",
-                @"deps\v8\Makefile.android",
-                @"loading_animat_4b41fc5ceedc968a4ee527dc6061dbdc[1].atlas"
-            };
+            getPatterns();
+        }
 
-            global_whitelist = new List<string>() 
-            {
-                "*.AFD",
-                "*decipher*",
-                "*.abc",
-                "*_recover_*.*",
-                "*+recover+*.*",
-                "*-recover-*.*",
-                "*cpyt*",
-                "*.*locked",
-                "locked.bmp",
-                "*.xxx",
-                "message.txt",
-                "*.ttt",
-                "*.ccc",
-                "*.adr",
-                ".~",
-                "*.btc",
-                "*.xyz",
-                "*.cbf",
-                "*.zzz",
-                "*.stn",
-                "*.one",
-                "*.1",
-                "*.tmp.exe",
-                "tor.exe",
-                "*.adr",
-                "*.gg",
-                "_ryp",
-                "*.ico"
+        public Scanner(Responder r)
+        {
+            _responder = r;
 
-            };
+            stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
 
             getPatterns();
         }
 
+        public Scanner DontStopOnFind()
+        {
+            stop_on_find = false;
+
+            return this;
+        }
+
+        public void Stop()
+        {
+            _stop = true;
+        }
+
         public void Scan()
         {
+
+            _scanned_files_count = 0;
+            _prev_files_count = 0;
+            _send_counts = true;
+            _stop = false;
+
+            ReportCurrent();
 
             foreach (DriveInfo drive in Program.GetLocalDrives() )
             {
@@ -112,33 +95,49 @@ namespace MSB_Virus_Scanner
                     Console.WriteLine(file);
                 }
             }
+
+            ReportCount();
+            _send_counts = false;
+        }
+
+        public void AdvanceCount(int count)
+        {
+            _scanned_files_count += count;
+
+            if (_scanned_files_count - _prev_files_count > 1000)
+            {
+                ReportCurrent();
+                _prev_files_count = _scanned_files_count;
+            }
+        }
+
+        public void ReportCurrent()
+        {
+            if (_send_counts) 
+                Program.dashboard.FilesCurrent(_scanned_files_count);
+        }
+
+        public void ReportCount()
+        {
+            Program.dashboard.FilesCount(_scanned_files_count);
         }
 
         private void getPatterns()
         {
-            string url = "https://fsrm.experiant.ca/api/v1/combined";
-
-            var userdefined_patterns = (ConfigurationManager.AppSettings["patterns"].Length > 0) ?
-                    ConfigurationManager.AppSettings["patterns"].Split('|').ToList() :
-                    new List<string>() { "aeraimangangaingaiegannnanrg" };
-
-            var whitelist = (ConfigurationManager.AppSettings["whitelist"].Length > 0) ?
-                ConfigurationManager.AppSettings["whitelist"].Split('|').ToList() :
-                new List<string>() { "aeraimangangaingaiegannnanrg" };
-
-            using (var webClient = new WebClient())
-            {
-                var json = webClient.DownloadString(url);
-                var filters = JsonConvert.DeserializeObject<Filters>(json).filters;
-
-                var all_patterns = filters.Union(userdefined_patterns).Except(whitelist).Except(global_whitelist);
+            var patterns = Program.dashboard.Patterns.Where(pat => { return pat.published_flag; }).Select( pat => { return pat.name; });
+            var definitions = Program.dashboard.Definitions.Where( def => { return def.status == "active"; }).Select( def => { return def.pattern; } );
+            var exemptions = Program.dashboard.Exemptions.Where(ex => { return ex.published_flag; }).Select( ex => { return ex.pattern; });
+            
+            var all_patterns = patterns.Union(definitions).Except(exemptions);
 
                 non_wildcard_patterns = all_patterns.Where(s => !s.Contains("*"));
 
                 wildcard_patterns = all_patterns.Except(non_wildcard_patterns);
-            }
+
+                file_whitelist = exemptions.Where(s => !s.Contains("*"));
 
             Program.log.Write("Pattern Definitions Refreshed.");
+            Console.WriteLine("Definitions Refreshed");
         }
 
         public void scanFolder(string path, bool recurse = true)
@@ -147,13 +146,17 @@ namespace MSB_Virus_Scanner
             {
                 // scan the root folder of path
                 if (infected && stop_on_find) return;
+                if (_stop) return;
 
-                Console.WriteLine("Scanning " + path);
+                //Console.WriteLine("Scanning " + path);
+                Console.WriteLine("Scanned Files {0}", _scanned_files_count.ToString());
+
+                AdvanceCount( Directory.EnumerateFiles(path).Count() );
 
                 // low hanging fruit, find simple patterns that do not contain wildcards
                 var files = Directory
                     .EnumerateFiles(path)
-                    .Where(file => non_wildcard_patterns.Any(file.Contains))
+                    .Where(file => non_wildcard_patterns.Any( Path.GetFileName(file).Equals ) )
                     .Where(file => !file_whitelist.Contains(file))
                     .Where(file => !file_whitelist.Any(file.Contains));
 
@@ -161,10 +164,16 @@ namespace MSB_Virus_Scanner
                 {
                     infected = true;
                     this.infected_files = files;
-                    this.matched_pattern = non_wildcard_patterns.First(files.First().Contains);
+                    this.matched_pattern = non_wildcard_patterns.First( Path.GetFileName(files.First()).Equals );
 
-                    Program.log.WriteInfection(files, this.matched_pattern);
+                    //Program.log.WriteInfection(files, this.matched_pattern);
                     if (stop_on_find) return;
+
+                    if ( _responder != null )
+                    {
+                        _responder.respond(this);
+                        Reset();
+                    }
                 }
 
                 // deeper scan, scans the folder once per pattern.
@@ -178,7 +187,7 @@ namespace MSB_Virus_Scanner
                         .EnumerateFiles(path, pattern)
                         .Where(file => !file_whitelist.Contains(file))
                         .Where(file => !file_whitelist.Any(file.Contains))
-                        .Where(file => !special || file.EndsWith(pattern.Replace("*", String.Empty)));
+                        .Where(file => !special || file.ToLower().EndsWith(pattern.ToLower().Replace("*", String.Empty)));
 
                     if (files.Count() > 0)
                     {
@@ -186,8 +195,14 @@ namespace MSB_Virus_Scanner
                         this.infected_files = files;
                         this.matched_pattern = pattern;
 
-                        Program.log.WriteInfection(files, this.matched_pattern);
+                        //Program.log.WriteInfection(files, this.matched_pattern);
                         if (stop_on_find) break;
+
+                        if (_responder != null)
+                        {
+                            _responder.respond(this);
+                            Reset();
+                        }
                     }
                 }
 
@@ -206,8 +221,6 @@ namespace MSB_Virus_Scanner
                 }
 
             }
-
-            
 
             catch (System.IO.PathTooLongException e) // ignore
             { Console.WriteLine(e.Message); }

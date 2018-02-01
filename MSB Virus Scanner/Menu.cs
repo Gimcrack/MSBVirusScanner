@@ -13,7 +13,7 @@ namespace MSB_Virus_Scanner
     {
         public static int Display(bool invalid = false)
         {
-            int max_choice = 7;
+            int max_choice = 8;
             int choice = -1;
 
             string service_text = Program.IsServiceInstalled() ? "Installed" : "Not Installed";
@@ -45,10 +45,11 @@ namespace MSB_Virus_Scanner
             Console.WriteLine("  2.) Sentry Mode - Actively monitor this computer for threats.", Color.DodgerBlue);
             Console.WriteLine("  3.) Install Service", Color.DeepSkyBlue);
             Console.WriteLine("  4.) Uninstall Service", Color.Aquamarine);
-            Console.WriteLine("  5.) Configure Settings", Color.AliceBlue);
-            Console.WriteLine("  6.) Help", Color.Aqua);
-            Console.WriteLine("  7.) Exit", Color.CornflowerBlue);
-            Console.WriteLine(" Please Enter An Option (1-7). Press <Enter>", Color.LightCyan);
+            Console.WriteLine("  5.) Update", Color.AntiqueWhite);
+            Console.WriteLine("  6.) Configure Settings", Color.AliceBlue);
+            Console.WriteLine("  7.) Help", Color.Aqua);
+            Console.WriteLine("  8.) Exit", Color.CornflowerBlue);
+            Console.WriteLine(" Please Enter An Option (1-8). Press <Enter>", Color.LightCyan);
             
             if (invalid)
             {

@@ -1,0 +1,13 @@
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\bin\Debug\MSB Service Monitor.exe.config
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\bin\Debug\MSB Service Monitor.exe.manifest
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\bin\Debug\MSB Service Monitor.application
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\bin\Debug\MSB Service Monitor.exe
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\bin\Debug\MSB Service Monitor.pdb
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\bin\Debug\Newtonsoft.Json.dll
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB Service Monitor.TrustInfo.xml
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB Service Monitor.exe.manifest
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB Service Monitor.application
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB Service Monitor.exe
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB Service Monitor.pdb
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB_Windows_Update_Management.ProjectInstaller.resources
+B:\Git Workspace\Windows Projects\MSB Windows Update Management\MSBServiceMonitor\obj\Debug\MSB Service Monitor.csproj.GenerateResource.Cache
