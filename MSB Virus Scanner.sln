@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSB Virus Scanner", "MSB Virus Scanner\MSB Virus Scanner.csproj", "{B360EAB1-A170-45D8-8140-8DE475688E56}"
 EndProject
@@ -19,9 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{75282A
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MSB Virus Sentry", "Setup\Setup.vdproj", "{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSB Sentry Monitor", "MSB Sentry Monitor\MSB Sentry Monitor.csproj", "{B961B818-EDCC-4409-A727-6549EC12C66C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerAction", "InstallerAction\InstallerAction.csproj", "{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MSB Virus Sentry", "Setup\Setup.vdproj", "{F7614CD8-AFF7-427D-B09B-57A99429BA49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,22 +53,6 @@ Global
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Server|Any CPU.Build.0 = Server|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Service|Any CPU.ActiveCfg = Service|Any CPU
 		{B360EAB1-A170-45D8-8140-8DE475688E56}.Service|Any CPU.Build.0 = Service|Any CPU
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Debug|Any CPU.ActiveCfg = Debug
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Debug|Any CPU.Build.0 = Debug
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Public|Any CPU.ActiveCfg = PublicInstaller
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Public|Any CPU.Build.0 = PublicInstaller
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.PublicInstaller|Any CPU.ActiveCfg = PublicInstaller
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.PublicInstaller|Any CPU.Build.0 = PublicInstaller
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Publish|Any CPU.ActiveCfg = Publish
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Publish|Any CPU.Build.0 = Publish
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.PublishMonitor|Any CPU.ActiveCfg = Publish
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.PublishMonitor|Any CPU.Build.0 = Publish
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Release|Any CPU.ActiveCfg = Release
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Release|Any CPU.Build.0 = Release
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Server|Any CPU.ActiveCfg = Release
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Server|Any CPU.Build.0 = Release
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Service|Any CPU.ActiveCfg = Release
-		{F85C9CD6-760C-46C5-B205-3ABF700FBBBF}.Service|Any CPU.Build.0 = Release
 		{B961B818-EDCC-4409-A727-6549EC12C66C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B961B818-EDCC-4409-A727-6549EC12C66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B961B818-EDCC-4409-A727-6549EC12C66C}.Public|Any CPU.ActiveCfg = PublishMonitor|Any CPU
@@ -83,6 +69,38 @@ Global
 		{B961B818-EDCC-4409-A727-6549EC12C66C}.Server|Any CPU.Build.0 = PublishMonitor|Any CPU
 		{B961B818-EDCC-4409-A727-6549EC12C66C}.Service|Any CPU.ActiveCfg = PublishMonitor|Any CPU
 		{B961B818-EDCC-4409-A727-6549EC12C66C}.Service|Any CPU.Build.0 = PublishMonitor|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Public|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Public|Any CPU.Build.0 = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.PublicInstaller|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.PublicInstaller|Any CPU.Build.0 = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.PublishMonitor|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.PublishMonitor|Any CPU.Build.0 = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Server|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Server|Any CPU.Build.0 = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Service|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D56C96-7E86-420E-8B5E-FCD8D514D7B6}.Service|Any CPU.Build.0 = Release|Any CPU
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Debug|Any CPU.ActiveCfg = Debug
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Debug|Any CPU.Build.0 = Debug
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Public|Any CPU.ActiveCfg = PublicInstaller
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Public|Any CPU.Build.0 = PublicInstaller
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.PublicInstaller|Any CPU.ActiveCfg = PublicInstaller
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.PublicInstaller|Any CPU.Build.0 = PublicInstaller
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Publish|Any CPU.ActiveCfg = Publish
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Publish|Any CPU.Build.0 = Publish
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.PublishMonitor|Any CPU.ActiveCfg = Publish
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.PublishMonitor|Any CPU.Build.0 = Publish
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Release|Any CPU.ActiveCfg = Release
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Release|Any CPU.Build.0 = Release
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Server|Any CPU.ActiveCfg = Release
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Server|Any CPU.Build.0 = Release
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Service|Any CPU.ActiveCfg = Release
+		{F7614CD8-AFF7-427D-B09B-57A99429BA49}.Service|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

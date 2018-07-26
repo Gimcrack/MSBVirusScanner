@@ -28,3 +28,8 @@ C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Rele
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB_Virus_Scanner.ConfigForms.resources
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB_Virus_Scanner.Service.MSB_Virus_Sentry.resources
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csproj.GenerateResource.Cache
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.exe
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.pdb
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csprojResolveAssemblyReference.cache
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Release\MSB_Virus_Scanner.ConfigForms.resources
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Release\MSB Virus Scanner.csproj.GenerateResource.Cache

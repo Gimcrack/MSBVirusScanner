@@ -11,3 +11,5 @@ C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\Pub
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.exe
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.pdb
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Sentry Monitor.csprojResolveAssemblyReference.cache
+C:\B\Code\msb-virus-scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.exe
+C:\B\Code\msb-virus-scanner\MSB Sentry Monitor\obj\PublishMonitor\MSB Service Monitor.pdb

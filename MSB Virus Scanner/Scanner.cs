@@ -23,28 +23,13 @@ namespace MSB_Virus_Scanner
 
         public string matched_pattern;
 
-        private int _scanned_files_count;
-        private int _prev_files_count;
-        private bool _send_counts = false;
         private bool _stop = false;
 
         public IEnumerable<string> infected_files;
 
-        private IEnumerable<string> non_wildcard_patterns;
-
-        private IEnumerable<string> dot_patterns;
-
-        private IEnumerable<string> non_dot_patterns;
-
-        private IEnumerable<string> wildcard_patterns;
-
-        private IEnumerable<string> file_whitelist;
-
         public Scanner()
         {
             stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
-
-            getPatterns();
         }
 
         public Scanner(Responder r)
@@ -52,8 +37,6 @@ namespace MSB_Virus_Scanner
             _responder = r;
 
             stop_on_find = (ConfigurationManager.AppSettings["action_on_find"] == "stop");
-
-            getPatterns();
         }
 
         public Scanner DontStopOnFind()
@@ -70,182 +53,237 @@ namespace MSB_Virus_Scanner
 
         public void Scan()
         {
-
-            _scanned_files_count = 0;
-            _prev_files_count = 0;
-            _send_counts = true;
             _stop = false;
 
-            ReportCurrent();
-
-            foreach (DriveInfo drive in Program.GetLocalDrives() )
-            {
-                if (infected && stop_on_find) break;
-                scanFolder(drive.RootDirectory.ToString());
-            }
-
-            if (infected)
-            {
-                Program.log.Write("Infection Found" + Environment.NewLine + "Infected Files" + Environment.NewLine + String.Join(Environment.NewLine, infected_files));
-
-                Console.WriteLine("Infected files");
-                
-                foreach (string file in infected_files)
-                {
-                    Console.WriteLine(file);
-                }
-            }
-
-            ReportCount();
-            _send_counts = false;
-        }
-
-        public void AdvanceCount(int count)
-        {
-            _scanned_files_count += count;
-
-            if (_scanned_files_count - _prev_files_count > 1000)
-            {
-                ReportCurrent();
-                _prev_files_count = _scanned_files_count;
-            }
-        }
-
-        public void ReportCurrent()
-        {
-            if (_send_counts) 
-                Program.dashboard.FilesCurrent(_scanned_files_count);
-        }
-
-        public void ReportCount()
-        {
-            Program.dashboard.FilesCount(_scanned_files_count);
-        }
-
-        private void getPatterns()
-        {
-            var patterns = Program.dashboard.Patterns.Where(pat => { return pat.published_flag; }).Select( pat => { return pat.name; });
-            var definitions = Program.dashboard.Definitions.Where( def => { return def.status == "active"; }).Select( def => { return def.pattern; } );
-            var exemptions = Program.dashboard.Exemptions.Where(ex => { return ex.published_flag; }).Select( ex => { return ex.pattern; });
+            Program.log.Write("Scanning Registry");
+            // look for weird 'Run' entries in the Registry
+            ScanRegistry();
             
-            var all_patterns = patterns.Union(definitions).Except(exemptions);
 
-                non_wildcard_patterns = all_patterns.Where(s => !s.Contains("*"));
+            Program.log.Write("Scanning Scheduled Tasks");
+            // look for weird scheduled tasks
+            ScanScheduledTasks();
+            
 
-                wildcard_patterns = all_patterns.Except(non_wildcard_patterns);
 
-                file_whitelist = exemptions.Where(s => !s.Contains("*"));
+            Program.log.Write("Scanning User Profiles");
+            // scan users Appdata Folder and subfolders for weird files
+            ScanProfiles();
+            
 
-            Program.log.Write("Pattern Definitions Refreshed.");
-            Console.WriteLine("Definitions Refreshed");
+
+            Program.log.Write("Scanning Startup Items");
+            // look for weird executables in all users startup
+            ScanStartup();
+            
+
+
+            Program.log.Write("Scanning System32");
+            // look for weird executables in System32
+            ScanSystem32();
+            
+
+
+            Program.log.Write("Reporting Findings");
+            // report on findings
+            Respond();
+
+
+            Program.log.Write("Done Scanning");
+       }
+
+        private void Respond()
+        {
+            if (Program.findings.HasFindings())
+            {
+                Program.log.Write(" --==|| Infected || ==-- ");
+
+                infected = true;
+
+                _responder.respond();
+            }
+
+            else
+            {
+                CleanBillOfHealth();
+            }
         }
 
-        public void scanFolder(string path, bool recurse = true)
+        private void CleanBillOfHealth()
+        {
+            _responder.respond_clean();
+        }
+
+        private void ScanRegistry()
+        {
+            var values = RegistryHelper.GetRunValues();
+            if ( values.Count() > 0 )
+                AddFinding(values, "Registry Run Value");
+        }
+
+        private void ScanScheduledTasks()
+        {
+            var weird_tasks = ScheduledTaskHelper.GetWeirdTasks();
+            if ( weird_tasks.Count() > 0 )
+                AddFinding(weird_tasks, "Weird Task");
+        }
+
+        private void ScanStartup()
+        {
+            ScanPathForExtensions(@"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp", new string[] { ".exe" });
+        }
+
+        private void ScanSystem32()
+        {
+            foreach( string weird_folder in System32Helper.GetWeirdFolders() )
+            {
+                ScanPathForExtensions(weird_folder, new string[] { ".exe" });
+            }
+        }
+
+        private void ScanProfiles()
+        {
+            foreach (var path in Directory.EnumerateDirectories(@"C:\Users"))
+            {
+                Program.log.Write( String.Format("Scanning Profile {0}", path) );
+                ScanProfile(path);
+                
+            }
+        }
+
+        private bool CheckFolderAccess(string folderPath)
         {
             try
             {
-                // scan the root folder of path
-                if (infected && stop_on_find) return;
-                if (_stop) return;
-
-                //Console.WriteLine("Scanning " + path);
-                Console.WriteLine("Scanned Files {0}", _scanned_files_count.ToString());
-
-                AdvanceCount( Directory.EnumerateFiles(path).Count() );
-
-                // low hanging fruit, find simple patterns that do not contain wildcards
-                var files = Directory
-                    .EnumerateFiles(path)
-                    .Where(file => non_wildcard_patterns.Any( Path.GetFileName(file).Equals ) )
-                    .Where(file => !file_whitelist.Contains(file))
-                    .Where(file => !file_whitelist.Any(file.Contains));
-
-                if (files.Count() > 0)
-                {
-                    infected = true;
-                    this.infected_files = files;
-                    this.matched_pattern = non_wildcard_patterns.First( Path.GetFileName(files.First()).Equals );
-
-                    //Program.log.WriteInfection(files, this.matched_pattern);
-                    if (stop_on_find) return;
-
-                    if ( _responder != null )
-                    {
-                        _responder.respond(this);
-                        Reset();
-                    }
-                }
-
-                // deeper scan, scans the folder once per pattern.
-                foreach (string pattern in wildcard_patterns)
-                {
-                    if (infected && stop_on_find) break;
-
-                    Boolean special = this.IsSpecialPattern(pattern);
-
-                    files = Directory
-                        .EnumerateFiles(path, pattern)
-                        .Where(file => !file_whitelist.Contains(file))
-                        .Where(file => !file_whitelist.Any(file.Contains))
-                        .Where(file => !special || file.ToLower().EndsWith(pattern.ToLower().Replace("*", String.Empty)));
-
-                    if (files.Count() > 0)
-                    {
-                        infected = true;
-                        this.infected_files = files;
-                        this.matched_pattern = pattern;
-
-                        //Program.log.WriteInfection(files, this.matched_pattern);
-                        if (stop_on_find) break;
-
-                        if (_responder != null)
-                        {
-                            _responder.respond(this);
-                            Reset();
-                        }
-                    }
-                }
+                // Attempt to get a list of security permissions from the folder. 
+                // This will raise an exception if the path is read only or do not have access to view the permissions. 
+                System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(folderPath);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
 
 
-                if (infected && stop_on_find) return;
+        private void ScanProfile(string profile)
+        {
+            if ( profile.EndsWith("Default User") || profile.EndsWith("All Users") || profile.EndsWith("Public") || profile.EndsWith("jb30111") )
+                return;
 
-
-                if (recurse)
-                {
-                    foreach (string dir in Directory.EnumerateDirectories(path))
-                    {
-                        if (infected && stop_on_find) break;
-
-                        scanFolder(dir);
-                    }
-                }
-
+            foreach ( string subpath in ProfileHelper.GetWeirdFolders(profile) )
+            {
+                ScanForWeirdExe(subpath);
             }
 
+            ScanPathForExtensions(Path.Combine(profile, "AppData", "Local", "Temp"), new string[] { ".cmd"} );
+
+            ScanPathForExtensions(Path.Combine(profile, "AppData", "Roaming"), new string[] { ".exe" });
+        }
+
+        private void ScanPathForExtensions(string path, string[] extensions, bool recurse = true)
+        {
+            
+            var files = GetRecentFiles(path, recurse)
+            .Where(x => extensions.Any(ext => ext == Path.GetExtension(x)));
+
+
+            if (files.Count() > 0)
+                AddFinding(files, Path.GetExtension(files.First()));
+
+            if (recurse)
+            {
+                try
+                {
+                    var folders = Directory.EnumerateDirectories(path);
+
+                    foreach (string dir in folders)
+                    {
+                        ScanPathForExtensions(dir, extensions);
+                    }
+                }
+                catch (Exception)
+                { }
+                
+            }
+
+        }
+
+        public void ScanForWeirdExe(string path, bool recurse = true)
+        {
+            var files = GetRecentFiles(path, recurse)
+                    .Where(p => Path.GetExtension(p) == ".exe")
+                    .Where(p => Path.GetFileNameWithoutExtension(p).Length < 12 && Path.GetFileNameWithoutExtension(p).Length > 5);
+
+            if ( files.Count() > 0 )
+                AddFinding(files, String.Format("Weird exe in {0}",path));
+
+            if (recurse)
+            {
+                try
+                {
+                    var folders = Directory.EnumerateDirectories(path);
+                    foreach (string dir in folders)
+                    {
+                        ScanForWeirdExe(dir);
+                    }
+                }
+                catch (Exception)
+                { }
+            }
+        }
+
+
+        private void AddFinding( IEnumerable<string> files, string pattern )
+        {
+            Program.findings.Add(files, pattern);
+        }
+
+        private void AddFinding( IEnumerable<Finding> findings, string pattern)
+        {
+            Program.findings.Add(findings, pattern);
+        }
+
+        private IEnumerable<string> GetRecentFiles(string path, bool recurse = true)
+        {
+            try
+            {
+                Console.WriteLine(String.Format("Scanning Path {0}", path));
+                Program.log.Write( String.Format("Scanning Path {0}", path) );
+
+                return Directory.EnumerateFiles(path, "*", SearchOption.TopDirectoryOnly)
+                    .Where(x => !Whitelist.files.Any(pattern => x.Contains(pattern)))
+                    .Where(x => x.Length <= 260)
+                    .Where(x => File.GetCreationTime(x) > DateTime.Today.AddDays(-14)); 
+            }
+
+
             catch (System.IO.PathTooLongException e) // ignore
-            { Console.WriteLine(e.Message); }
+            {  }
 
             catch (System.IO.DirectoryNotFoundException e) // ignore
-            { Console.WriteLine(e.Message); }
+            {  }
 
             catch (System.IO.IOException e) // ignore
-            { Console.WriteLine(e.Message); }
-
+            {  }
 
             catch (System.UnauthorizedAccessException e) // ignore
-            { Console.WriteLine(e.Message); }
+            {  }
 
             catch (System.InvalidOperationException e) // ignore
-            { Console.WriteLine(e.Message); }
+            {  }
 
-            catch(System.ArgumentNullException e) // ignore
-            { Console.WriteLine(e.Message); }
+            catch (System.ArgumentNullException e) // ignore
+            {  }
 
             catch (System.Exception e)
             {
                 Program.log.Write(String.Format("Problem Scanning Computer {0} \n\r Error {1}", e.GetType().ToString(), e.Message));
                 Console.WriteLine(e.Message);
             }
+
+            return new List<string>();
         }
 
         public void Reset()
@@ -253,18 +291,6 @@ namespace MSB_Virus_Scanner
             infected = false;
             matched_pattern = null;
             infected_files = null;
-        }
-
-
-        /**
-         *    Handle special cases where the pattern 
-         *     is of the form *.XXX to avoid matching
-         *     files like *.XXXABC
-         *    
-         */
-        private Boolean IsSpecialPattern(string pattern)
-        {
-            return (pattern.LastIndexOf("*.") == (pattern.Length - 5)) ? true : false;
         }
     }
 

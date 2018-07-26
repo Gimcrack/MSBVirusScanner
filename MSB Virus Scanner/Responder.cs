@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Management;
 using System.Timers;
+using System.IO;
 
 namespace MSB_Virus_Scanner
 {
@@ -22,12 +23,8 @@ namespace MSB_Virus_Scanner
 
         private Boolean mail_frozen;
 
-        public Scanner scanner;
-
-        public void respond(Scanner scnr)
+        public void respond()
         {
-            this.scanner = scnr;
-
             if ( Program.debug == 1 )
             {
                 debug();
@@ -56,58 +53,166 @@ namespace MSB_Virus_Scanner
                     disconnect();
                     break;
             }
+        }
 
-            this.scanner.Reset();
+        public void respond_clean()
+        {
+            sendSlackClean();
         }
 
         private void debug() 
         {
-            string subject = string.Format("TEST -- MSB Infection Found On {0} - {1}",
-                Environment.MachineName,
-                Environment.UserName
-            );
-            
-            string message = string.Format("TEST -- Infected Files <br> {0} Pattern: {1} {2}<br/>{3} <br/> {4}",
-                Environment.NewLine,
-                scanner.matched_pattern,
-                Environment.NewLine,
-                String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files),
-                Program.log.Get()
-            );
+            //string subject = string.Format("TEST -- MSB Infection Found On {0} - {1}",
+            //    Environment.MachineName,
+            //    Environment.UserName
+            //);
 
-            sendDashboard();
+            //string message = string.Format("TEST -- Infected Files <br> {0} Pattern: {1} {2}<br/>{3} <br/> {4}",
+            //    Environment.NewLine,
+            //    scanner.matched_pattern,
+            //    Environment.NewLine,
+            //    String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files),
+            //    Program.log.Get()
+            //);
 
-            sendMail(message, subject);
+            //sendDashboard();
+
+            //sendMail(message, subject);
+
+            if (Program.should_clean)
+                Clean();
+
+            Program.log.WriteInfection(Program.findings.GetFormatted());
 
             sendSlack();
 
-            this.scanner.Reset();
+            if ( Program.should_clean && Program.should_reboot)
+                reboot();
         }
 
-        private void sendDashboard()
+        private void Clean()
         {
-            foreach(string file in scanner.infected_files)
+            //kill running explorer
+            foreach (Process p in Process.GetProcessesByName("explorer"))
             {
-                Program.dashboard.MatchedFile(file, scanner.matched_pattern);
+                p.Kill();
             }
+
+            // kill running iexplore
+            foreach (Process p in Process.GetProcessesByName("iexplore"))
+            {
+                p.Kill();
+            }
+
+            // kill running notepad
+            foreach (Process p in Process.GetProcessesByName("notepad"))
+            {
+                p.Kill();
+            }
+
+            // clean findings
+            Program.findings.Clean();
+
+            try
+            {
+                // empty c:\windows\temp
+                foreach (string file in Directory.EnumerateFiles(@"C:\Windows\Temp"))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+
+                    catch (Exception e)
+                    { } // ignore
+                }
+            }
+            catch (Exception)
+            { }
+            
+
+            try
+            {
+                // empty prefetch
+                foreach (string file in Directory.EnumerateFiles(@"C:\Windows\Prefetch"))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception e)
+                    { } // ignore
+
+                }
+            }
+            catch (Exception)
+            { }
+
+            
+        }
+
+
+        //private void sendDashboard()
+        //{
+        //    foreach(string file in scanner.infected_files)
+        //    {
+        //        Program.dashboard.MatchedFile(file, scanner.matched_pattern);
+        //    }
+        //}
+
+        private void sendSlackClean()
+        {
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["slack_enabled"])) return; // slack not enabled
+
+            Slack.Attachment a = new Slack.Attachment()
+            {
+                Title = "MSB Virus Scanner Results",
+                Color = "good",
+                ThumbUrl = "https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png"
+            };
+
+            a.AddField("Computer", Environment.MachineName);
+            a.AddField("Status", "All Clear");
+
+            Slack.Payload p = new Slack.Payload()
+            {
+                Text = (Program.debug == 1) ? "TEST -- MSB Clean Computer Found" : "MSB Clean Computer Found",
+                
+            };
+
+            p.Attach(a);
+
+            slack.PostMessage(p);
         }
 
         private void sendSlack()
         {
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["slack_enabled"])) return; // slack not enabled
 
-            if (slack_frozen) return; // wait until slack is allowed again;
+            //if (slack_frozen) return; // wait until slack is allowed again;
+            bool all_clean = ! Program.findings.Get().Any(o => !o.cleaned);
+            bool some_clean = Program.findings.Get().Any(o => o.cleaned);
+
+            string color = "danger";
+
+            if (some_clean) color = "warning";
+            if (all_clean) color = "good";
+
+            Program.log.Write("Sending Slack Message");
 
             Slack.Attachment a = new Slack.Attachment()
             {
                 Title = "MSB Virus Scanner Results",
+                Color = color
             };
 
             a.AddField("Computer", Environment.MachineName);
             a.AddField("User", Environment.UserName);
             a.AddField("IP", Program.GetLocalIPAddress());
-            a.AddField("Pattern", scanner.matched_pattern);
-            a.AddField("Files", String.Join(Environment.NewLine, scanner.infected_files), false);
+            //a.AddField("Pattern", scanner.matched_pattern);
+            a.AddField("Findings", Program.findings.GetFormatted(), false);
+            a.AddField("Clean Findings", Program.should_clean.ToString());
+            a.AddField("Reboot After", Program.should_reboot.ToString());
 
             Slack.Payload p = new Slack.Payload()
             {
@@ -118,7 +223,7 @@ namespace MSB_Virus_Scanner
 
             slack.PostMessage(p);
 
-            freezeSlack();
+            //freezeSlack();
         }
 
         private void freezeSlack()
@@ -183,14 +288,13 @@ namespace MSB_Virus_Scanner
                 Environment.UserName
             );
 
-            string message = string.Format("Infected Files <br> {0} Pattern: {1} {2}<br/>{3}",
+            string message = string.Format("Infected Files <br> {0} {1}<br/>{2}",
                 Environment.NewLine,
-                scanner.matched_pattern,
                 Environment.NewLine,
-                String.Join(@"<br/>" + Environment.NewLine, scanner.infected_files)
+                Program.findings.GetFormatted()
             );
 
-            sendDashboard();
+            //sendDashboard();
 
             sendMail(message, subject);
 
@@ -242,6 +346,14 @@ namespace MSB_Virus_Scanner
         {
             Program.log.Write(String.Format("Shuting Down {0}", Environment.MachineName));
             Process.Start("shutdown", "-s -t 300");
+        }
+
+
+
+        private void reboot()
+        {
+            Program.log.Write(String.Format("Shuting Down {0}", Environment.MachineName));
+            Process.Start("shutdown", "-r -t 300");
         }
     }
 }

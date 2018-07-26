@@ -10,6 +10,10 @@ namespace MSB_Virus_Scanner
     {
         void write(string text);
 
+        void write_task(string text);
+
+        void write_task(List<string> text);
+
         void write_infection(string text);
 
         void write_infection(IEnumerable<string> list);

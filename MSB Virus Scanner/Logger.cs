@@ -9,14 +9,20 @@ namespace MSB_Virus_Scanner
 {
     public class Logger : ILogger
     {
-        public static string logPath = string.Format(@"C:\temp\MSB_Virus_Scan_{0:yyyy-MM-dd_hh-mm-ss}.log", DateTime.Now);
-        public static string infectedPath = string.Format(@"C:\temp\MSB_Virus_Scan_{0:yyyy-MM-dd_hh-mm-ss}_infections.log", DateTime.Now);
+        public static string logPath = string.Format(@"C:\temp\MSB_Virus_Sentry\Results\MSB_Virus_Scan_{0:yyyy-MM-dd_hh-mm-ss}.log", DateTime.Now);
+        public static string tasksPath = string.Format(@"\\dsjkb\desoft$\MSB_Virus_Sentry\Results\{1}_{0:yyyy-MM-dd_hh-mm-ss}_tasks.log", DateTime.Now,Environment.MachineName);
+        public static string infectedPath = string.Format(@"C:\temp\MSB_Virus_Sentry\Results\MSB_Virus_Scan_{0:yyyy-MM-dd_hh-mm-ss}_infections.log", DateTime.Now);
 
         public Logger()
         {
             if (!Directory.Exists(@"C:\temp"))
             {
                 Directory.CreateDirectory(@"C:\temp");
+            }
+
+            if (!Directory.Exists(@"C:\temp\MSB_Virus_Sentry\Results") )
+            {
+                Directory.CreateDirectory(@"C:\temp\MSB_Virus_Sentry\Results");
             }
 
             cleanup();
@@ -34,6 +40,13 @@ namespace MSB_Virus_Scanner
                 }
             }
 
+
+
+            //if (!File.Exists(tasksPath))
+            //{
+            //    File.CreateText(tasksPath);
+            //}
+
         }
 
         public void write(string text)
@@ -42,6 +55,33 @@ namespace MSB_Virus_Scanner
             {
                 sw.WriteLine(DateTime.Now + "  --  " + text);
             }
+        }
+
+        public void write_task(string text)
+        {
+            using (StreamWriter sw = File.AppendText(tasksPath))
+            {
+                sw.WriteLine(DateTime.Now + "\t" + Environment.MachineName + "\t" + text);
+            }
+        }
+
+        public void write_task(List<string> text)
+        {
+            string output = "";
+
+            if (text.Count() < 1)
+                return;
+
+            foreach (string line in text)
+            {
+                output += DateTime.Now + "\t" + Environment.MachineName + "\t" + line.Replace(@"C:\Windows\System32\Tasks", "") + Environment.NewLine;
+            }
+
+            Console.WriteLine("Writing to text file");
+
+            Console.WriteLine(output);
+
+            File.AppendAllText(tasksPath, output);
         }
 
         public void write_infection( string text )

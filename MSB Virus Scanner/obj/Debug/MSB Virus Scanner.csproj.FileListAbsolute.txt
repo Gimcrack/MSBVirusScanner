@@ -57,3 +57,37 @@ C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debu
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb
 C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.pdb
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe.config
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.exe
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.pdb
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.exe
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\MSB Virus Scanner.pdb
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\Colorful.Console.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Common.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Interfaces.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Redis.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Text.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\StackExchange.Redis.StrongName.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Net.Http.Formatting.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Core.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Interfaces.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Linq.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.PlatformServices.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Windows.Threading.dll
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\Newtonsoft.Json.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Common.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Interfaces.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Redis.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\ServiceStack.Text.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\StackExchange.Redis.StrongName.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Net.Http.Formatting.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Core.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Interfaces.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Linq.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.PlatformServices.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Reactive.Windows.Threading.xml
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csprojResolveAssemblyReference.cache
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Debug\MSB_Virus_Scanner.ConfigForms.resources
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\obj\Debug\MSB Virus Scanner.csproj.GenerateResource.Cache
+C:\B\Code\msb-virus-scanner\MSB Virus Scanner\bin\Debug\System.Management.Automation.dll

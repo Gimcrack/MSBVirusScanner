@@ -14,10 +14,10 @@ namespace MSB_Virus_Scanner
         {
             logs = new List<ILogger>();
 
-            Add(new EventLogger());
+            //Add(new EventLogger());
 
-            if (Program.database_logging) 
-                Add(new DashboardLogger());
+            //if (Program.database_logging) 
+            //    Add(new DashboardLogger());
         }
 
         // add a Logger 
@@ -51,6 +51,45 @@ namespace MSB_Virus_Scanner
                 
             }
         }
+
+
+
+        public void WriteTask(string message)
+        {
+            foreach (var l in logs)
+            {
+                try
+                {
+                    l.write_task(message);
+                }
+
+                catch (Exception e)
+                {
+                    // don't worry about these.
+                }
+
+            }
+        }
+
+
+
+        public void WriteTask(List<string> message)
+        {
+            foreach (var l in logs)
+            {
+                try
+                {
+                    l.write_task(message);
+                }
+
+                catch (Exception e)
+                {
+                    // don't worry about these.
+                }
+
+            }
+        }
+
 
         public void WriteInfection(string message)
         {

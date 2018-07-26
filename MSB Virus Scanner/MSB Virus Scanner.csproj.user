@@ -11,9 +11,8 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>
-    </StartArguments>
-    <StartWorkingDirectory>C:\B\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\</StartWorkingDirectory>
+    <StartArguments>-clean -no-reboot</StartArguments>
+    <StartWorkingDirectory>c:\temp</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Service|AnyCPU'">
     <StartWorkingDirectory>B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\</StartWorkingDirectory>
@@ -24,6 +23,7 @@
     <StartWorkingDirectory>B:\Git Workspace\Windows Projects\MSB Virus Scanner\MSB Virus Scanner\bin\Debug\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <StartWorkingDirectory>F:\working\</StartWorkingDirectory>
+    <StartWorkingDirectory>C:\temp\</StartWorkingDirectory>
+    <StartArguments>-clean -no-reboot</StartArguments>
   </PropertyGroup>
 </Project>

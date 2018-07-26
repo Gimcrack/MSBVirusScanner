@@ -23,6 +23,19 @@ namespace MSB_Virus_Scanner
             Events.WriteEntry(text, EventLogEntryType.Information);
         }
 
+        public void write_task(string text)
+        {
+            Console.WriteLine(text);
+        }
+
+        public void write_task(List<string> text)
+        {
+            foreach(string line in text)
+            {
+                Console.WriteLine(line);
+            }
+        }
+
         public void write_infection(string text)
         {
             Console.WriteLine(text);

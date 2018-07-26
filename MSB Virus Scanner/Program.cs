@@ -29,27 +29,33 @@ namespace MSB_Virus_Scanner
 
         public static Boolean unattended;
 
+        public static FindingHelper findings;
+
         public static Scanner scanner;
 
-        public static Sentry sentry;
+        //public static Sentry sentry;
 
         public static Responder responder;
 
         public static LogHandler log;
 
-        public static EchoHelper echo;
+        //public static EchoHelper echo;
 
-        public static Api api;
+        //public static Api api;
 
-        public static Dashboard dashboard;
+        //public static Dashboard dashboard;
 
-        public static Redis redis;
+        // public static Redis redis;
 
-        public static Service.MSB_Virus_Sentry MVS;
+        //public static Service.MSB_Virus_Sentry MVS;
 
         public static int debug = Int32.Parse(config["debug"]);
 
         public static bool database_logging = Convert.ToBoolean(config["database_enabled"]);
+
+        public static bool should_clean = Convert.ToBoolean(config["clean"]);
+
+        public static bool should_reboot = Convert.ToBoolean(config["reboot"]);
 
         [STAThread]
         public static void Main(string[] args)
@@ -64,7 +70,7 @@ namespace MSB_Virus_Scanner
                 log = new LogHandler();
 
                 // set up the redis connectino
-                redis = new Redis();
+                //redis = new Redis();
 
                 // get the mode of operation
                 mode = GetMode(args);
@@ -72,24 +78,48 @@ namespace MSB_Virus_Scanner
                 // init responder
                 responder = new Responder();
 
+                // init findings helper
+                findings = new FindingHelper();
+
                 // init api helper
-                api = new Api();
+                //api = new Api();
 
                 // init dashboard helper
-                dashboard = new Dashboard();
+                //dashboard = new Dashboard();
 
-                dashboard.Register();
-                dashboard.Fetch();
+                //dashboard.Register();
+                //dashboard.Fetch();
 
                 // send the heartbeat
-                dashboard.Heartbeat();
-                
+                //dashboard.Heartbeat();
+
                 // init echo listener
-                echo = new EchoHelper();
+                //echo = new EchoHelper();
 
-                echo.init();
+                //echo.init();
 
-                Route();
+                foreach(string arg in args)
+                {
+                    Console.WriteLine("arg {0}", arg);
+                    if ( arg.ToLower().Contains("clean") )
+                    {
+                        should_clean = true;
+                    }
+
+                    if (arg.ToLower().Contains("no-reboot"))
+                    {
+                        should_reboot = false;
+                    }
+                }
+
+                //Console.WriteLine("Press Enter to Start Scanning");
+                //Console.ReadLine();
+
+                Scan();
+
+                Application.Exit();
+                
+                //Route();
             }
             catch(Exception e)
             {
@@ -131,15 +161,15 @@ namespace MSB_Virus_Scanner
                     ShowMenu();
                     break;
 
-                case "Service":
-                    Service();
+                //case "Service":
+                //    Service();
 
-                    break;
+                //    break;
 
-                case "Sentry":
-                    Sentry();
+                //case "Sentry":
+                //    Sentry();
 
-                    break;
+                //    break;
 
                 case "Scanner":
                     Scanner();
@@ -188,7 +218,7 @@ namespace MSB_Virus_Scanner
             switch (userChoice)
             {
                 case 1: mode = "Scanner"; break;
-                case 2: mode = "Sentry"; break;
+                //case 2: mode = "Sentry"; break;
                 case 3: mode = "Install"; break;
                 case 4: mode = "Uninstall"; break;
                 case 5: mode = "Update"; break;
@@ -355,52 +385,47 @@ namespace MSB_Virus_Scanner
             }
         }
 
-        private static void Service()
-        {
-            try
-            {
-                ServiceBase[] ServicesToRun;
-                ServicesToRun = new ServiceBase[] 
-                { 
-                    MVS = new Service.MSB_Virus_Sentry()
-                };
-                ServiceBase.Run(ServicesToRun);
-            }
-            catch ( System.IO.FileLoadException e )
-            {
-                Program.log.Write(e.Message);
-            }
+        //private static void Service()
+        //{
+        //    try
+        //    {
+        //        ServiceBase[] ServicesToRun;
+        //        ServicesToRun = new ServiceBase[] 
+        //        { 
+        //            MVS = new Service.MSB_Virus_Sentry()
+        //        };
+        //        ServiceBase.Run(ServicesToRun);
+        //    }
+        //    catch ( System.IO.FileLoadException e )
+        //    {
+        //        Program.log.Write(e.Message);
+        //    }
 
-            catch (Exception e)
-            {
-                Program.log.Write(e.Message);
-            }
-        }
+        //    catch (Exception e)
+        //    {
+        //        Program.log.Write(e.Message);
+        //    }
+        //}
 
-        private static void Sentry()
-        {
-            sentry = new Sentry();
+        //private static void Sentry()
+        //{
+        //    sentry = new Sentry();
 
-            sentry.Init();
-        }
+        //    sentry.Init();
+        //}
 
 
         private static void Scanner()
         {
             log.Add(new Logger());
-            
-            scanner = new Scanner();
+
+            Program.log.Write(String.Format("Clean After Scan {0}", should_clean.ToString()));
+            Program.log.Write(String.Format("Reboot After Clean {0}", should_reboot.ToString()));
+
+            scanner = new Scanner(responder);
             scanner.Scan();
 
-            if (scanner.infected)
-            {
-                responder.respond(scanner);
-            }
-
-            else
-            {
-                log.CleanUp();
-            }
+            //log.CleanUp();
         }
 
         public static void Scan()
@@ -423,9 +448,13 @@ namespace MSB_Virus_Scanner
             {
                 switch (args[0].Trim(new char[] { '/', '-' }).ToLower().Trim())
                 {
-                    case "sentry": return "Sentry";
+                    //case "sentry": return "Sentry";
 
-                    case "scanner": return "Scanner";
+                    case "scanner":
+                    case "scan":
+                        if (args[1].Trim(new char[] { '/', '-' }).ToLower().Trim().ToString() == "clean")
+                            should_clean = true;
+                        return "Scanner";
 
                     case "install":
                         unattended = true;
